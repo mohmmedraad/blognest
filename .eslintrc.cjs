@@ -4,11 +4,13 @@ const config = {
     parserOptions: {
         project: true,
     },
-    plugins: ["@typescript-eslint"],
+    plugins: ["@typescript-eslint", "tailwindcss"],
     extends: [
         "next/core-web-vitals",
         "plugin:@typescript-eslint/recommended-type-checked",
         "plugin:@typescript-eslint/stylistic-type-checked",
+        "prettier",
+        "plugin:tailwindcss/recommended",
     ],
     rules: {
         "no-console": "warn",
@@ -37,6 +39,15 @@ const config = {
                 },
             },
         ],
+    },
+    settings: {
+        tailwindcss: {
+            callees: ["cn"],
+            config: "./tailwind.config.ts",
+        },
+        next: {
+            rootDir: ["./"],
+        },
     },
 }
 module.exports = config
