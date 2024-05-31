@@ -4,6 +4,10 @@ import million from "million/compiler"
 
 await import("./src/env.js")
 
-const nextConfig = {}
+const nextConfig = {
+    images: {
+        domains: ["avatar.vercel.sh"],
+    },
+}
 
 export default MillionLint.next({ rsc: true })(nextConfig)
