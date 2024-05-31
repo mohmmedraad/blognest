@@ -1,17 +1,10 @@
 export const site = {
     name: "Blognest",
+    githubLink: "https://github.com/mohmmedraad/blognest",
     links: [
         {
             name: "Blogs",
             href: "/blogs",
-        },
-        {
-            name: "About",
-            href: "/about",
-        },
-        {
-            name: "contact",
-            href: "/contact",
         },
     ],
 }
