@@ -59,6 +59,7 @@ const HomePageHero: FC<HomePageHeroProps> = ({}) => {
                         style={{
                             maskImage: `linear-gradient(to top, transparent, black 30%)`,
                         }}
+                        loading="eager"
                     />
                     <Image
                         src="/torus.png"
