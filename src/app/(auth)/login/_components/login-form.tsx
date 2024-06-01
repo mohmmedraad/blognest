@@ -33,7 +33,7 @@ const LoginForm: FC<LoginFormProps> = ({}) => {
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} id="sign-up">
+            <form onSubmit={form.handleSubmit(onSubmit)} id="login">
                 <FormField
                     control={form.control}
                     name="email"

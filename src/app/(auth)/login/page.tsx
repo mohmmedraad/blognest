@@ -53,7 +53,7 @@ const Page: FC<PageProps> = ({}) => {
                         <Button
                             className="w-full"
                             type="submit"
-                            form="login-up"
+                            form="login"
                         >
                             Login
                         </Button>
