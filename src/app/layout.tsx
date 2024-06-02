@@ -5,6 +5,7 @@ import "@/styles/globals.css"
 import { type Metadata } from "next"
 import { GeistSans } from "geist/font/sans"
 
+import { Toaster } from "@/components/ui/sonner"
 import Providers from "@/components/providers"
 
 export const metadata: Metadata = {
@@ -48,7 +49,10 @@ export default function RootLayout({
     return (
         <html lang="en" className={`${GeistSans.variable}`}>
             <body>
-                <Providers>{children}</Providers>
+                <Providers>
+                    {children}
+                    <Toaster richColors />
+                </Providers>
             </body>
         </html>
     )
