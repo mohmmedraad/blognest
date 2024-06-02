@@ -1,7 +1,6 @@
 import { type FC } from "react"
 import Link from "next/link"
 
-import { Button } from "@/components/ui/button"
 import {
     Card,
     CardContent,
@@ -12,9 +11,9 @@ import {
 } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
 import Background from "@/components/background"
-import { Icons } from "@/components/icons"
 import Logo from "@/components/logo"
 import MaxWidthWrapper from "@/components/max-width-wrapper"
+import OAuthProviders from "@/components/oAuth-providers"
 
 import LoginForm from "./_components/login-form"
 
@@ -33,13 +32,7 @@ const LoginPage: FC<LoginPageProps> = async ({}) => {
                         </CardDescription>
                     </CardHeader>
                     <CardContent className="pb-0">
-                        <Button
-                            variant={"outline"}
-                            className="flex w-full gap-1"
-                        >
-                            <Icons.Google className="size-6" />
-                            Sing in with Google
-                        </Button>
+                        <OAuthProviders />
                         <div className="relative my-4">
                             <p className="absolute left-1/2 top-1/2 flex size-7 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-background p-1 text-sm text-gray-600">
                                 or

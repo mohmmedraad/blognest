@@ -1,6 +1,5 @@
 import { type SVGProps } from "react"
 
-export type Icon = (props: SVGProps<SVGSVGElement>) => JSX.Element
 export const Icons = {
     instagram: (props: SVGProps<SVGSVGElement>) => (
         <svg
