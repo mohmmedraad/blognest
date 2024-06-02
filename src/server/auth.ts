@@ -1,14 +1,17 @@
+import { env } from "@/env"
+import { db } from "@/server/db"
 import { PrismaAdapter } from "@auth/prisma-adapter"
+import { compare } from "bcrypt"
 import {
     getServerSession,
     type DefaultSession,
     type NextAuthOptions,
 } from "next-auth"
 import { type Adapter } from "next-auth/adapters"
+import CredentialsProvider from "next-auth/providers/credentials"
 import GoogleProvider from "next-auth/providers/google"
 
-import { env } from "@/env"
-import { db } from "@/server/db"
+import { loginSchema } from "@/lib/validations/auth"
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -37,36 +40,89 @@ declare module "next-auth" {
  * @see https://next-auth.js.org/configuration/options
  */
 export const authOptions: NextAuthOptions = {
+    session: {
+        strategy: "jwt",
+    },
     callbacks: {
-        session: ({ session, user }) => ({
-            ...session,
-            user: {
-                ...session.user,
-                id: user.id,
-            },
-        }),
+        session: ({ session, token }) => {
+            return {
+                ...session,
+                user: {
+                    ...session.user,
+                    id: token.id,
+                },
+            }
+        },
+        async jwt({ token, user }) {
+            const dbUser = await db.user.findFirst({
+                where: {
+                    email: token.email,
+                },
+            })
+
+            if (!dbUser) {
+                token.id = user.id
+                return token
+            }
+
+            return {
+                id: dbUser.id,
+                name: dbUser.name,
+                email: dbUser.email,
+                picture: dbUser.image,
+            }
+        },
+    },
+    pages: {
+        signIn: "/login",
     },
     adapter: PrismaAdapter(db) as Adapter,
     providers: [
+        CredentialsProvider({
+            name: "Credentials",
+            credentials: {
+                email: {},
+                password: {},
+            },
+            async authorize(credentials) {
+                const { success, data } = loginSchema.safeParse(credentials)
+
+                if (!success) {
+                    return null
+                }
+                const user = await db.user.findFirst({
+                    select: {
+                        id: true,
+                        name: true,
+                        password: true,
+                        emailVerified: true,
+                    },
+                    where: {
+                        email: data.email,
+                    },
+                })
+
+                if (!user?.password) {
+                    return null
+                }
+
+                const isPasswordMatch = await compare(
+                    data.password,
+                    user.password
+                )
+
+                if (!isPasswordMatch) {
+                    return null
+                }
+
+                return user
+            },
+        }),
         GoogleProvider({
             clientId: env.GOOGLE_CLIENT_ID,
             clientSecret: env.GOOGLE_CLIENT_SECRET,
         }),
-        /**
-         * ...add more providers here.
-         *
-         * Most other providers require a bit more work than the Discord provider. For example, the
-         * GitHub provider requires you to add the `refresh_token_expires_in` field to the Account
-         * model. Refer to the NextAuth.js docs for the provider you want to use. Example:
-         *
-         * @see https://next-auth.js.org/providers/github
-         */
     ],
 }
 
-/**
- * Wrapper for `getServerSession` so that you don't need to import the `authOptions` in every file.
- *
- * @see https://next-auth.js.org/configuration/nextjs
- */
 export const getServerAuthSession = () => getServerSession(authOptions)
