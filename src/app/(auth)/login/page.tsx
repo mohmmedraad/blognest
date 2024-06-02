@@ -21,8 +21,8 @@ interface LoginPageProps {}
 
 const LoginPage: FC<LoginPageProps> = async ({}) => {
     return (
-        <div className="relative h-screen">
-            <MaxWidthWrapper className="flex min-h-screen items-center justify-center">
+        <div className="relative">
+            <MaxWidthWrapper className="flex min-h-screen items-center justify-center py-8">
                 <Card className="w-full max-w-[400px]">
                     <CardHeader>
                         <Logo />
