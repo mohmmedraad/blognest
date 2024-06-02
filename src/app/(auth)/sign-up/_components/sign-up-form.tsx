@@ -1,11 +1,9 @@
 "use client"
 
 import { type FC } from "react"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { type z } from "zod"
 
-import { signUpSchema } from "@/lib/validations/auth"
+import { useSignUp } from "@/hooks/use-sign-up"
+import { Button } from "@/components/ui/button"
 import {
     Form,
     FormControl,
@@ -19,21 +17,11 @@ import { Input } from "@/components/ui/input"
 interface SingUpFormProps {}
 
 const SingUpForm: FC<SingUpFormProps> = ({}) => {
-    const form = useForm<z.infer<typeof signUpSchema>>({
-        resolver: zodResolver(signUpSchema),
-        defaultValues: {
-            email: "",
-        },
-    })
-
-    function onSubmit(values: z.infer<typeof signUpSchema>) {
-        // eslint-disable-next-line no-console
-        console.log(values)
-    }
+    const { form, signUp, isPending } = useSignUp()
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} id="sign-up">
+            <form onSubmit={form.handleSubmit((values) => signUp(values))}>
                 <FormField
                     control={form.control}
                     name="name"
@@ -70,12 +58,23 @@ const SingUpForm: FC<SingUpFormProps> = ({}) => {
                         <FormItem>
                             <FormLabel>Password</FormLabel>
                             <FormControl>
-                                <Input placeholder="********" {...field} />
+                                <Input
+                                    placeholder="********"
+                                    type="password"
+                                    {...field}
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
+                <Button
+                    className="mt-6 w-full"
+                    type="submit"
+                    disabled={isPending}
+                >
+                    Create
+                </Button>
             </form>
         </Form>
     )
