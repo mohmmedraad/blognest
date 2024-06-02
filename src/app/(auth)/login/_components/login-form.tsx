@@ -1,11 +1,9 @@
 "use client"
 
 import { type FC } from "react"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { type z } from "zod"
 
-import { loginSchema } from "@/lib/validations/auth"
+import { useLogin } from "@/hooks/use-login"
+import { Button } from "@/components/ui/button"
 import {
     Form,
     FormControl,
@@ -19,21 +17,11 @@ import { Input } from "@/components/ui/input"
 interface LoginFormProps {}
 
 const LoginForm: FC<LoginFormProps> = ({}) => {
-    const form = useForm<z.infer<typeof loginSchema>>({
-        resolver: zodResolver(loginSchema),
-        defaultValues: {
-            email: "",
-        },
-    })
-
-    function onSubmit(values: z.infer<typeof loginSchema>) {
-        // eslint-disable-next-line no-console
-        console.log(values)
-    }
+    const { form, login, isPending } = useLogin()
 
     return (
         <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} id="login">
+            <form onSubmit={form.handleSubmit((values) => login(values))}>
                 <FormField
                     control={form.control}
                     name="email"
@@ -57,12 +45,23 @@ const LoginForm: FC<LoginFormProps> = ({}) => {
                         <FormItem>
                             <FormLabel>Password</FormLabel>
                             <FormControl>
-                                <Input placeholder="********" {...field} />
+                                <Input
+                                    placeholder="********"
+                                    type="password"
+                                    {...field}
+                                />
                             </FormControl>
                             <FormMessage />
                         </FormItem>
                     )}
                 />
+                <Button
+                    className="mt-6 w-full"
+                    type="submit"
+                    disabled={isPending}
+                >
+                    Login
+                </Button>
             </form>
         </Form>
     )

@@ -18,9 +18,9 @@ import MaxWidthWrapper from "@/components/max-width-wrapper"
 
 import LoginForm from "./_components/login-form"
 
-interface PageProps {}
+interface LoginPageProps {}
 
-const Page: FC<PageProps> = ({}) => {
+const LoginPage: FC<LoginPageProps> = async ({}) => {
     return (
         <div className="relative h-screen">
             <MaxWidthWrapper className="flex min-h-screen items-center justify-center">
@@ -32,7 +32,7 @@ const Page: FC<PageProps> = ({}) => {
                             Access your account and manage your blog
                         </CardDescription>
                     </CardHeader>
-                    <CardContent>
+                    <CardContent className="pb-0">
                         <Button
                             variant={"outline"}
                             className="flex w-full gap-1"
@@ -41,7 +41,7 @@ const Page: FC<PageProps> = ({}) => {
                             Sing in with Google
                         </Button>
                         <div className="relative my-4">
-                            <p className="absolute left-1/2 top-1/2 size-7 -translate-x-1/2 -translate-y-1/2 rounded-full bg-background p-1 text-sm text-gray-600">
+                            <p className="absolute left-1/2 top-1/2 flex size-7 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-background p-1 text-sm text-gray-600">
                                 or
                             </p>
                             <Separator />
@@ -50,13 +50,6 @@ const Page: FC<PageProps> = ({}) => {
                         <LoginForm />
                     </CardContent>
                     <CardFooter className="block">
-                        <Button
-                            className="w-full"
-                            type="submit"
-                            form="login"
-                        >
-                            Login
-                        </Button>
                         <Separator className="my-4" />
                         <p className="text-sm text-gray-500">
                             Don&apos;t have an account?{" "}
@@ -75,4 +68,4 @@ const Page: FC<PageProps> = ({}) => {
     )
 }
 
-export default Page
+export default LoginPage
