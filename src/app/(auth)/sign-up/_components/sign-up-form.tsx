@@ -13,6 +13,7 @@ import {
     FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
+import { PasswordInput } from "@/components/ui/password-input"
 
 interface SingUpFormProps {}
 
@@ -58,9 +59,8 @@ const SingUpForm: FC<SingUpFormProps> = ({}) => {
                         <FormItem>
                             <FormLabel>Password</FormLabel>
                             <FormControl>
-                                <Input
+                                <PasswordInput
                                     placeholder="********"
-                                    type="password"
                                     {...field}
                                 />
                             </FormControl>
