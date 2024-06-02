@@ -4,7 +4,7 @@ const config = {
     parserOptions: {
         project: true,
     },
-    plugins: ["@typescript-eslint", "tailwindcss"],
+    plugins: ["@typescript-eslint", "tailwindcss", "@tanstack/query"],
     extends: [
         "next/core-web-vitals",
         "plugin:@typescript-eslint/recommended-type-checked",
@@ -39,6 +39,9 @@ const config = {
                 },
             },
         ],
+        "@tanstack/query/exhaustive-deps": "error",
+        "@tanstack/query/no-rest-destructuring": "warn",
+        "@tanstack/query/stable-query-client": "error",
     },
     settings: {
         tailwindcss: {

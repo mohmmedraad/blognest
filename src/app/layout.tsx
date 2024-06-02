@@ -5,6 +5,8 @@ import "@/styles/globals.css"
 import { type Metadata } from "next"
 import { GeistSans } from "geist/font/sans"
 
+import Providers from "@/components/providers"
+
 export const metadata: Metadata = {
     metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL!),
     title: {
@@ -45,7 +47,9 @@ export default function RootLayout({
 }) {
     return (
         <html lang="en" className={`${GeistSans.variable}`}>
-            <body>{children}</body>
+            <body>
+                <Providers>{children}</Providers>
+            </body>
         </html>
     )
 }
