@@ -8,6 +8,7 @@ export const env = createEnv({
      */
     server: {
         DATABASE_URL: z.string().url(),
+        VERCEL_URL: z.string().url(),
         NODE_ENV: z
             .enum(["development", "test", "production"])
             .default("development"),
@@ -24,6 +25,10 @@ export const env = createEnv({
         ),
         GOOGLE_CLIENT_ID: z.string(),
         GOOGLE_CLIENT_SECRET: z.string(),
+        SMTP_HOST: z.string(),
+        SMTP_PORT: z.coerce.number(),
+        NODEMAILER_USER: z.string(),
+        NODEMAILER_PASSWORD: z.string(),
     },
 
     /**
@@ -41,11 +46,16 @@ export const env = createEnv({
      */
     runtimeEnv: {
         DATABASE_URL: process.env.DATABASE_URL,
+        VERCEL_URL: process.env.VERCEL_URL,
         NODE_ENV: process.env.NODE_ENV,
         NEXTAUTH_SECRET: process.env.NEXTAUTH_SECRET,
         NEXTAUTH_URL: process.env.NEXTAUTH_URL,
         GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID,
         GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
+        SMTP_HOST: process.env.SMTP_HOST,
+        SMTP_PORT: process.env.SMTP_PORT,
+        NODEMAILER_USER: process.env.NODEMAILER_USER,
+        NODEMAILER_PASSWORD: process.env.NODEMAILER_PASSWORD,
     },
     /**
      * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

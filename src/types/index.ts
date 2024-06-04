@@ -9,3 +9,11 @@ export type OAuthProvider = {
     label: string
     Icon: Icon
 }
+
+export type EmailOptions = {
+    to: string
+    subject: string
+    html: string
+}
+
+export type SearchParams = Record<string, string>

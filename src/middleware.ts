@@ -3,7 +3,7 @@ import { getToken } from "next-auth/jwt"
 
 import { env } from "./env"
 
-const PUBLIC_ROUTES = ["/", "/blogs", "/login", "/sign-up"]
+const PUBLIC_ROUTES = ["/", "/blogs", "/login", "/sign-up", "/verify"]
 const AUTH_ROUTES = ["/dashboard"]
 
 export async function middleware(req: NextRequest) {

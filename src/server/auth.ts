@@ -43,7 +43,43 @@ export const authOptions: NextAuthOptions = {
     session: {
         strategy: "jwt",
     },
+    events: {
+        linkAccount: async ({ user }) => {
+            await db.user.update({
+                where: {
+                    id: user.id,
+                },
+                data: {
+                    emailVerified: new Date(),
+                },
+            })
+        },
+    },
     callbacks: {
+        signIn: async ({ user, account }) => {
+            if (account?.provider !== "credentials") {
+                return true
+            }
+
+            const dbUser = await db.user.findFirst({
+                select: {
+                    emailVerified: true,
+                },
+                where: {
+                    email: user.email,
+                },
+            })
+
+            if (!dbUser) {
+                return false
+            }
+
+            if (!dbUser?.emailVerified) {
+                return false
+            }
+
+            return true
+        },
         session: ({ session, token }) => {
             return {
                 ...session,
@@ -75,6 +111,7 @@ export const authOptions: NextAuthOptions = {
     },
     pages: {
         signIn: "/login",
+        error: "/auth-error",
     },
     adapter: PrismaAdapter(db) as Adapter,
     providers: [
@@ -112,6 +149,10 @@ export const authOptions: NextAuthOptions = {
                 )
 
                 if (!isPasswordMatch) {
+                    return null
+                }
+
+                if (!user.emailVerified) {
                     return null
                 }
 
