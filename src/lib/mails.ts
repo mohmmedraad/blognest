@@ -1,8 +1,8 @@
 import { transporter } from "./nodemailer"
 
 export async function sendVerificationLink(token: string, email: string) {
-    const verificationUrl = process.env.VERCEL_URL
-        ? `${process.env.VERCEL_URL}/verify?token=${token}`
+    const verificationUrl = process.env.NEXT_PUBLIC_APP_URL
+        ? `${process.env.NEXT_PUBLIC_APP_URL}/verify?token=${token}`
         : `http://localhost:3000/verify?token=${token}`
 
     await transporter.sendMail({
