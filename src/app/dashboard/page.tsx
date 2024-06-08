@@ -1,7 +1,6 @@
 import { type FC } from "react"
 import { db } from "@/server/db"
 
-import { getCachedUser } from "@/lib/cached-data"
 import CustomBreadcrumb from "@/components/custom-breadcrumb"
 import DashboardHeading from "@/components/dashboard-heading"
 import DashboardMain from "@/components/dashboard-main"
