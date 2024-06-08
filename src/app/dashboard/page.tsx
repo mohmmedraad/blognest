@@ -19,7 +19,7 @@ type Blog = {
     createdAt: Date
 }
 
-export const blogs: Blog[] = [
+const blogs: Blog[] = [
     {
         id: "1",
         title: "Blogny",
