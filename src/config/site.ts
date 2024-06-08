@@ -53,12 +53,12 @@ export const DASHBOARD_PRIMARY_LINKS = [
     },
     {
         name: "Sites",
-        href: "/sites",
+        href: "/dashboard/sites",
         Icon: Globe,
     },
     {
         name: "Articles",
-        href: "/articles",
+        href: "/dashboard/articles",
         Icon: SquareGanttChart,
     },
 ]
