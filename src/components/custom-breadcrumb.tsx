@@ -53,12 +53,6 @@ const CustomBreadcrumb: FC<CustomBreadcrumbProps> = ({
     const pathSegments = pathname.split("/").filter(Boolean)
     const currentPage = pathSegments.pop()
     const previousPage = pathSegments.pop()
-    console.log({
-        pathname,
-        pathSegments,
-        currentPage,
-        previousPage,
-    })
     return (
         <Breadcrumb className={className}>
             <BreadcrumbList>
