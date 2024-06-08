@@ -47,6 +47,9 @@
         --input: 215 27.9% 16.9%;
         --ring: 263.4 70% 50.4%;
     }
+    .dashboard-nav-link svg {
+        color: var(--primary);
+    }
 }
 
 @layer base {
@@ -55,5 +58,9 @@
     }
     body {
         @apply bg-background text-foreground;
+    }
+
+    .dashboard-nav-link svg {
+        @apply text-primary;
     }
 }
