@@ -1,3 +1,5 @@
+import { Globe, LayoutDashboard, SquareGanttChart } from "lucide-react"
+
 export const site = {
     name: "Blognest",
     title: "Open-Source Blog builder build with Next.js, Bootstrapped by T3-Stack",
@@ -42,3 +44,21 @@ export const site = {
         },
     ],
 }
+
+export const DASHBOARD_PRIMARY_LINKS = [
+    {
+        name: "Dashboard",
+        href: "/dashboard",
+        Icon: LayoutDashboard,
+    },
+    {
+        name: "Sites",
+        href: "/sites",
+        Icon: Globe,
+    },
+    {
+        name: "Articles",
+        href: "/articles",
+        Icon: SquareGanttChart,
+    },
+]
