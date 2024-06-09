@@ -50,15 +50,18 @@ export const DASHBOARD_PRIMARY_LINKS = [
         name: "Dashboard",
         href: "/dashboard",
         Icon: LayoutDashboard,
+        matchSegments: false,
     },
     {
         name: "Sites",
         href: "/dashboard/sites",
         Icon: Globe,
+        matchSegments: true,
     },
     {
         name: "Articles",
         href: "/dashboard/articles",
         Icon: SquareGanttChart,
+        matchSegments: false,
     },
 ]

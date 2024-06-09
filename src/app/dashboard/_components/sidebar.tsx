@@ -2,6 +2,7 @@
 
 import { useState, type FC } from "react"
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { ChevronRight, LogOut, Settings } from "lucide-react"
 
 import { DASHBOARD_PRIMARY_LINKS, site } from "@/config/site"
@@ -18,6 +19,7 @@ interface SidebarProps {}
 
 const Sidebar: FC<SidebarProps> = ({}) => {
     const [isOpen, setIsOpen] = useState(false)
+    const pathname = usePathname()
     return (
         <div className="relative hidden lg:block">
             <aside
@@ -42,15 +44,22 @@ const Sidebar: FC<SidebarProps> = ({}) => {
                 </div>
                 <nav className="mt-6 flex w-full flex-col items-center gap-1 px-4">
                     <TooltipProvider disableHoverableContent>
-                        {DASHBOARD_PRIMARY_LINKS.map(({ name, href, Icon }) => (
-                            <SidebarLink
-                                key={name}
-                                name={name}
-                                href={href}
-                                Icon={Icon}
-                                isOpen={isOpen}
-                            />
-                        ))}
+                        {DASHBOARD_PRIMARY_LINKS.map(
+                            ({ name, href, Icon, matchSegments }) => (
+                                <SidebarLink
+                                    key={name}
+                                    name={name}
+                                    href={href}
+                                    Icon={Icon}
+                                    active={
+                                        matchSegments
+                                            ? pathname.startsWith(href)
+                                            : pathname === href
+                                    }
+                                    isOpen={isOpen}
+                                />
+                            )
+                        )}
                     </TooltipProvider>
                 </nav>
                 <nav className="mt-auto flex w-full flex-col items-center gap-1 px-4">
@@ -67,6 +76,7 @@ const Sidebar: FC<SidebarProps> = ({}) => {
                                 name={name}
                                 href={href}
                                 Icon={Icon}
+                                active={pathname === href}
                                 isOpen={isOpen}
                             />
                         ))}

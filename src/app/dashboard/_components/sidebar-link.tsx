@@ -1,10 +1,10 @@
 "use client"
 
 import { type FC } from "react"
+import Link from "next/link"
 import { type LucideIcon } from "lucide-react"
 
 import { cn } from "@/lib/utils"
-import NavLink from "@/components/ui/nav-link"
 import {
     Tooltip,
     TooltipContent,
@@ -16,15 +16,24 @@ interface SidebarLinkProps {
     Icon: LucideIcon
     href: string
     name: string
+    active: boolean
 }
 
-const SidebarLink: FC<SidebarLinkProps> = ({ isOpen, Icon, href, name }) => {
+const SidebarLink: FC<SidebarLinkProps> = ({
+    isOpen,
+    Icon,
+    href,
+    name,
+    active,
+}) => {
     return isOpen ? (
-        <NavLink
-            className="relative flex w-full items-center rounded-lg px-3 py-2 text-base font-semibold text-gray-700 transition-colors hover:bg-gray-50"
+        <Link
+            className={cn(
+                "relative flex w-full items-center rounded-lg px-3 py-2 text-base font-semibold text-gray-700 transition-colors hover:bg-gray-50",
+                active && "bg-gray-50 text-gray-900"
+            )}
             href={href}
-            matchFullPath={false}
-            activeClass="bg-gray-50 text-gray-900"
+            // activeClass="bg-gray-50 text-gray-900"
             prefetch={false}
         >
             <Icon className="mr-3 size-6 text-gray-500" />
@@ -38,15 +47,17 @@ const SidebarLink: FC<SidebarLinkProps> = ({ isOpen, Icon, href, name }) => {
             >
                 {name}
             </span>
-        </NavLink>
+        </Link>
     ) : (
         <Tooltip>
             <TooltipTrigger asChild>
-                <NavLink
-                    className="relative h-10 w-full items-center rounded-lg px-3 py-2 text-base font-semibold text-gray-700 transition-colors hover:bg-gray-50"
+                <Link
+                    className={cn(
+                        "relative h-10 w-full items-center rounded-lg px-3 py-2 text-base font-semibold text-gray-700 transition-colors hover:bg-gray-50",
+                        active && "bg-gray-50 text-gray-900"
+                    )}
                     href={href}
-                    matchFullPath={false}
-                    activeClass="bg-gray-50 text-gray-900"
+                    // activeClass="bg-gray-50 text-gray-900"
                     prefetch={false}
                 >
                     <Icon className="mr-3 size-6 text-gray-500" />
@@ -58,7 +69,7 @@ const SidebarLink: FC<SidebarLinkProps> = ({ isOpen, Icon, href, name }) => {
                     >
                         {name}
                     </span>
-                </NavLink>
+                </Link>
             </TooltipTrigger>
             <TooltipContent side="right">{name}</TooltipContent>
         </Tooltip>
