@@ -225,7 +225,7 @@ export default function FileUploader({
     const isDisabled = disabled || (files?.length ?? 0) >= maxFiles
 
     return (
-        <div>
+        <div className="w-full">
             <Dropzone
                 onDrop={onDrop}
                 accept={accept}
