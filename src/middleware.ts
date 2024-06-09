@@ -13,7 +13,9 @@ export async function middleware(req: NextRequest) {
     const route = req.nextUrl.pathname
 
     const isApiAuthRoute = route.startsWith("/api/auth")
-    const isPublicRoute = PUBLIC_ROUTES.includes(route)
+    const isPublicRoute = PUBLIC_ROUTES.some((_route) =>
+        _route.startsWith(route)
+    )
     const isAuthRoute = AUTH_ROUTES.includes(route)
 
     if (isApiAuthRoute) {
