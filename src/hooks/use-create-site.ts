@@ -30,7 +30,7 @@ export const useCreateSite = () => {
         onError: (error) => {
             if (error.message === "UNAUTHORIZED") {
                 toast.error("You must be logged in to create a site")
-                return router.push("/sign-in?redirect=/sites")
+                return router.push("/sign-in?redirect=/dashboard/sites")
             }
             if (error.message === "CONFLICT") {
                 return form.setError("subdomain", {
