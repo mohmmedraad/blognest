@@ -13,3 +13,11 @@ export const createSiteSchema = z.object({
         message: "Subdomain must be at least 3 characters",
     }),
 })
+
+export const siteDetailsFormSchema = createSiteSchema.extend({
+    logo: z.array(z.instanceof(File)),
+})
+
+export const siteDetailsActionSchema = createSiteSchema.extend({
+    logo: z.string({ message: "You must provide a logo" }),
+})

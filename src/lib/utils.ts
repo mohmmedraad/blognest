@@ -74,3 +74,7 @@ export function formatBytes(
             : sizes[i] ?? "Bytes"
     }`
 }
+
+export function sameEntries<T extends object>(a: T, b: T) {
+    return JSON.stringify(a) === JSON.stringify(b)
+}
