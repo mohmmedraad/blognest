@@ -1,3 +1,5 @@
+"use client"
+
 import { type FC } from "react"
 import { type LucideIcon } from "lucide-react"
 
@@ -21,6 +23,7 @@ const SidebarLink: FC<SidebarLinkProps> = ({ isOpen, Icon, href, name }) => {
         <NavLink
             className="relative flex w-full items-center rounded-lg px-3 py-2 text-base font-semibold text-gray-700 transition-colors hover:bg-gray-50"
             href={href}
+            matchFullPath={false}
             activeClass="bg-gray-50 text-gray-900"
             prefetch={false}
         >
@@ -42,6 +45,7 @@ const SidebarLink: FC<SidebarLinkProps> = ({ isOpen, Icon, href, name }) => {
                 <NavLink
                     className="relative h-10 w-full items-center rounded-lg px-3 py-2 text-base font-semibold text-gray-700 transition-colors hover:bg-gray-50"
                     href={href}
+                    matchFullPath={false}
                     activeClass="bg-gray-50 text-gray-900"
                     prefetch={false}
                 >
