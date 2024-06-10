@@ -150,6 +150,7 @@ const SiteEditDetailsForm: FC<SiteEditDetailsFormDefaultValues> = (
                 <Separator className="my-5" />
                 <div className="flex justify-end gap-3">
                     <Button
+                        type="button"
                         variant={"outline"}
                         onClick={() => form.reset()}
                         disabled={isPending || isUploading}
