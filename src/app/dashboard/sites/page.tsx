@@ -72,40 +72,52 @@ const SitesPage: FC<SitesPageProps> = async ({}) => {
                     </AddSiteDialog>
                     <div className="mt-5 grid w-full grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                         {sites.map((site) => (
-                            <Card key={site.subdomain}>
-                                <div className="p-6 pb-0">
-                                    <Image
-                                        width={40}
-                                        height={40}
-                                        alt="logo"
-                                        src={site.logo ?? "/placeholder.png"}
-                                    />
-                                </div>
-                                <CardHeader>
-                                    <CardTitle>{site.title}</CardTitle>
-                                    <CardDescription className="line-clamp-2">
-                                        {site.description}
-                                    </CardDescription>
-                                </CardHeader>
-                                <CardContent>
-                                    <div className="flex items-center justify-between">
-                                        <Link href={siteUrl(site.subdomain)}>
-                                            <Badge
-                                                className="rounded-full hover:underline hover:underline-offset-2"
-                                                variant={"outline"}
-                                            >
-                                                {siteUrl(site.subdomain, false)}
-                                            </Badge>
-                                        </Link>
-                                        <p className="text-sm text-gray-500">
-                                            {format(
-                                                site.createdAt,
-                                                "yyy/MM/dd"
-                                            )}
-                                        </p>
+                            <Link
+                                key={site.subdomain}
+                                href={`/dashboard/sites/${site.subdomain}`}
+                            >
+                                <Card>
+                                    <div className="p-6 pb-0">
+                                        <Image
+                                            width={40}
+                                            height={40}
+                                            alt="logo"
+                                            src={
+                                                site.logo ?? "/placeholder.png"
+                                            }
+                                        />
                                     </div>
-                                </CardContent>
-                            </Card>
+                                    <CardHeader>
+                                        <CardTitle>{site.title}</CardTitle>
+                                        <CardDescription className="line-clamp-2">
+                                            {site.description}
+                                        </CardDescription>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <div className="flex items-center justify-between">
+                                            <Link
+                                                href={siteUrl(site.subdomain)}
+                                            >
+                                                <Badge
+                                                    className="rounded-full hover:underline hover:underline-offset-2"
+                                                    variant={"outline"}
+                                                >
+                                                    {siteUrl(
+                                                        site.subdomain,
+                                                        false
+                                                    )}
+                                                </Badge>
+                                            </Link>
+                                            <p className="text-sm text-gray-500">
+                                                {format(
+                                                    site.createdAt,
+                                                    "yyy/MM/dd"
+                                                )}
+                                            </p>
+                                        </div>
+                                    </CardContent>
+                                </Card>
+                            </Link>
                         ))}
                     </div>
                 </>
