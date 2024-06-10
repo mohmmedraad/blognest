@@ -1,7 +1,6 @@
 "use client"
 
-import { type FC } from "react"
-import { PlusCircle } from "lucide-react"
+import { type ComponentProps, type FC } from "react"
 
 import { useCreateSite } from "@/hooks/use-create-site"
 import { Button } from "@/components/ui/button"
@@ -23,18 +22,15 @@ import {
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 
-interface AddSiteDialogProps {}
+interface AddSiteDialogProps extends ComponentProps<typeof Button> {}
 
-const AddSiteDialog: FC<AddSiteDialogProps> = ({}) => {
-    const { form, createSite, isPending } = useCreateSite()
+const AddSiteDialog: FC<AddSiteDialogProps> = ({ children, ...props }) => {
+    const { form, isPending, open, setOpen, createSite } = useCreateSite()
 
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button size={"lg"} className="ml-auto mt-8 gap-1">
-                    <PlusCircle className="size-5" />
-                    Crate site
-                </Button>
+                <Button {...props}>{children}</Button>
             </DialogTrigger>
             <DialogContent>
                 <DialogHeader>

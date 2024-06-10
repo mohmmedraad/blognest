@@ -1,3 +1,4 @@
+import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { createSiteAction } from "@/actions/sites/create-site-action"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -10,6 +11,7 @@ import { handleGenericError } from "@/lib/utils"
 import { createSiteSchema } from "@/lib/validations/sites"
 
 export const useCreateSite = () => {
+    const [open, setOpen] = useState(false)
     const form = useForm<z.infer<typeof createSiteSchema>>({
         resolver: zodResolver(createSiteSchema),
         defaultValues: {
@@ -25,7 +27,9 @@ export const useCreateSite = () => {
         mutationFn: createSiteAction,
         onSuccess: () => {
             toast.success("Site created successfully")
+            setOpen(false)
             router.refresh()
+            form.reset()
         },
         onError: (error) => {
             if (error.message === "UNAUTHORIZED") {
@@ -47,7 +51,9 @@ export const useCreateSite = () => {
 
     return {
         form,
-        createSite: mutate,
         isPending,
+        open,
+        setOpen,
+        createSite: mutate,
     }
 }
