@@ -77,6 +77,7 @@ model Site {
     userId   String
     user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
     Articles Article[]
+    Authors  Authors[]
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -97,15 +98,27 @@ model Article {
     topic     String
     status    Status @default(unpublished)
 
-    likes  Likes[]
-    views  Views[]
-    siteId String
-    site   Site    @relation(fields: [siteId], references: [id])
+    autherId String
+    auther   Authors @relation(fields: [autherId], references: [id])
+    likes    Likes[]
+    views    Views[]
+    siteId   String
+    site     Site    @relation(fields: [siteId], references: [id])
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
 
     @@index([siteId])
+}
+
+model Authors {
+    id       String    @id @default(cuid())
+    siteId   String
+    site     Site      @relation(fields: [siteId], references: [id])
+    name     String
+    username String    @unique
+    avatar   String
+    articles Article[]
 }
 
 model Likes {
