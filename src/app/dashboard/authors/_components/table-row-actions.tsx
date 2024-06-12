@@ -13,11 +13,11 @@ import {
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import { type Author } from "./columns"
+import { type AuthorColumn } from "./columns"
 
 interface TableRowActionsProps {
-    row: Row<Author>
-    table: Table<Author>
+    row: Row<AuthorColumn>
+    table: Table<AuthorColumn>
 }
 
 export function TableRowActions({ row }: TableRowActionsProps) {
