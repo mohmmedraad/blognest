@@ -1,5 +1,7 @@
 import { z } from "zod"
 
+import { paginationSchema } from "./params"
+
 export const createSiteSchema = z.object({
     title: z.string({ message: "You must provide a title" }).min(5, {
         message: "Title must be at least 5 characters",
@@ -20,4 +22,24 @@ export const siteDetailsFormSchema = createSiteSchema.extend({
 
 export const siteDetailsActionSchema = createSiteSchema.extend({
     logo: z.string({ message: "You must provide a logo" }),
+})
+
+export const createAuthorFormSchema = z.object({
+    name: z.string({ message: "You must provide a name" }).min(5, {
+        message: "Name must be at least 5 characters",
+    }),
+    username: z.string({ message: "You must provide a username" }).min(3, {
+        message: "Username must be at least 3 characters",
+    }),
+    avatar: z.array(z.instanceof(File)),
+})
+
+export const createAuthorActionSchema = createAuthorFormSchema.extend({
+    avatar: z
+        .string({ message: "You must provide a logo" })
+        .url({ message: "Invalid URL" }),
+})
+
+export const getAuthorsSchema = paginationSchema.extend({
+    search: z.string().optional().default(""),
 })

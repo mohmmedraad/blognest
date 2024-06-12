@@ -1,4 +1,4 @@
-import { Globe, LayoutDashboard, SquareGanttChart } from "lucide-react"
+import { Globe, LayoutDashboard, SquareGanttChart, Users } from "lucide-react"
 
 export const site = {
     name: "Blognest",
@@ -62,6 +62,12 @@ export const DASHBOARD_PRIMARY_LINKS = [
         name: "Articles",
         href: "/dashboard/articles",
         Icon: SquareGanttChart,
+        matchSegments: true,
+    },
+    {
+        name: "Authors",
+        href: "/dashboard/authors",
+        Icon: Users,
         matchSegments: false,
     },
 ]

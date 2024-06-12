@@ -3,7 +3,10 @@ import { type BuiltInProviderType } from "next-auth/providers/index"
 import { type ClientUploadedFileData } from "uploadthing/types"
 import { type z } from "zod"
 
-import { type siteDetailsActionSchema } from "@/lib/validations/sites"
+import {
+    type getAuthorsSchema,
+    type siteDetailsActionSchema,
+} from "@/lib/validations/sites"
 
 export type Icon = (props: SVGProps<SVGSVGElement>) => JSX.Element
 
@@ -31,3 +34,5 @@ export type SiteEditDetailsFormDefaultValues = Omit<
 > & {
     logo: string | null
 }
+
+export type GetAuthorsSchema = z.infer<typeof getAuthorsSchema>
