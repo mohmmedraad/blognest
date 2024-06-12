@@ -11,7 +11,7 @@ import { TableRowActions } from "./table-row-actions"
 
 export type AuthorColumn = Awaited<
     ReturnType<typeof getAuthorsOptionsAction>
->[number]
+>["authors"][number]
 
 export const columns: ColumnDef<AuthorColumn>[] = [
     {
