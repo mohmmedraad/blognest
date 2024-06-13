@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { createAuthorAction } from "@/actions/authors/create-author-action"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { type z } from "zod"
@@ -13,6 +13,7 @@ import { createAuthorFormSchema } from "@/lib/validations/sites"
 import { useUploadFile } from "./use-upload-file"
 
 export const useCreateAuthor = () => {
+        const queryClient = useQueryClient()
     const [open, setOpen] = useState(false)
     const form = useForm<z.infer<typeof createAuthorFormSchema>>({
         resolver: zodResolver(createAuthorFormSchema),
@@ -28,10 +29,12 @@ export const useCreateAuthor = () => {
 
     const { mutate, isPending } = useMutation({
         mutationFn: createAuthorAction,
-        onSuccess: () => {
+        onSuccess: async () => {
             toast.success("Author created successfully")
             setOpen(false)
-            router.refresh()
+             await queryClient.invalidateQueries({
+                queryKey: ["authors"],
+            })
             form.reset()
         },
         onError: (error) => {
