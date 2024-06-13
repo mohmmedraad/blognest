@@ -44,7 +44,7 @@ const CreateAuthorDialog: FC<CreateAuthorDialogProps> = ({
             <DialogTrigger asChild>
                 <Button {...props}>{children}</Button>
             </DialogTrigger>
-            <DialogContent className="max-h-[90vh]">
+            <DialogContent className="max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
                     <DialogTitle>Create new Author</DialogTitle>
                 </DialogHeader>
