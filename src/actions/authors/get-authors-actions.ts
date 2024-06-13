@@ -17,6 +17,7 @@ export const getAuthorsOptionsAction = async (payload: GetAuthorsSchema) => {
 
     const authors = await db.authors.findMany({
         select: {
+            id: true,
             name: true,
             username: true,
             avatar: true,
