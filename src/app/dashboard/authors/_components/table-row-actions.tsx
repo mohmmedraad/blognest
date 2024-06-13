@@ -14,6 +14,8 @@ import {
 } from "@/components/ui/dropdown-menu"
 
 import { type AuthorColumn } from "./columns"
+import DeleteAuthorDialog from "./delete-author-dialog"
+import EditAuthorDialog from "./edit-author-dialog"
 
 interface TableRowActionsProps {
     row: Row<AuthorColumn>
@@ -24,7 +26,7 @@ export function TableRowActions({ row }: TableRowActionsProps) {
     const author = row.original
 
     return (
-        <DropdownMenu>
+        <DropdownMenu modal={false} key={"123"}>
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="size-8 p-0">
                     <span className="sr-only">Open menu</span>
@@ -41,8 +43,23 @@ export function TableRowActions({ row }: TableRowActionsProps) {
                     Copy username
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>Edit</DropdownMenuItem>
-                <DropdownMenuItem>Delete</DropdownMenuItem>
+                <EditAuthorDialog
+                    defaultValues={{
+                        id: author.id,
+                        name: author.name,
+                        username: author.username,
+                        avatar: author.avatar,
+                    }}
+                >
+                    <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                        Edit
+                    </DropdownMenuItem>
+                </EditAuthorDialog>
+                <DeleteAuthorDialog id={author.id} username={author.username}>
+                    <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                        Delete
+                    </DropdownMenuItem>
+                </DeleteAuthorDialog>
             </DropdownMenuContent>
         </DropdownMenu>
     )

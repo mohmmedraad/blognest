@@ -4,6 +4,8 @@ import { type ClientUploadedFileData } from "uploadthing/types"
 import { type z } from "zod"
 
 import {
+    type deleteAuthorSchema,
+    type editAuthorFormSchema,
     type getAuthorsSchema,
     type siteDetailsActionSchema,
 } from "@/lib/validations/sites"
@@ -36,3 +38,5 @@ export type SiteEditDetailsFormDefaultValues = Omit<
 }
 
 export type GetAuthorsSchema = z.infer<typeof getAuthorsSchema>
+export type EditAuthorFormSchema = z.infer<typeof editAuthorFormSchema>
+export type DeleteAuthorSchema = z.infer<typeof deleteAuthorSchema>

@@ -43,3 +43,11 @@ export const createAuthorActionSchema = createAuthorFormSchema.extend({
 export const getAuthorsSchema = paginationSchema.extend({
     search: z.string().optional().default(""),
 })
+
+export const editAuthorFormSchema = createAuthorActionSchema.extend({
+    id: z.string(),
+})
+
+export const deleteAuthorSchema = z.object({
+    id: z.string(),
+})
