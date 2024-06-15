@@ -126,23 +126,31 @@ export function DataTable<TData, TValue>({
                     </TableRow>
                 )}
 
-                {isFetching && (
-                    <TableRow>
-                        {columns.map((column) => (
-                            <TableCell key={column.id}>
-                                <Skeleton className="h-4 w-full" />
-                            </TableCell>
-                        ))}
-                    </TableRow>
-                )}
-
-                {!isTableEmpty &&
-                    !isFetching &&
+                {isFetching &&
                     new Array(5).fill(null).map((_, index) => (
                         <TableRow key={index}>
                             {columns.map((column) => (
                                 <TableCell key={column.id}>
                                     <Skeleton className="h-4 w-full" />
+                                </TableCell>
+                            ))}
+                        </TableRow>
+                    ))}
+
+                {!isTableEmpty &&
+                    !isFetching &&
+                    table.getRowModel().rows.map((row) => (
+                        <TableRow
+                            key={row.id}
+                            data-state={row.getIsSelected() && "selected"}
+                            className="data-[state=selected]:bg-gray-50"
+                        >
+                            {row.getVisibleCells().map((cell) => (
+                                <TableCell key={cell.id}>
+                                    {flexRender(
+                                        cell.column.columnDef.cell,
+                                        cell.getContext()
+                                    )}
                                 </TableCell>
                             ))}
                         </TableRow>
