@@ -75,6 +75,28 @@ export function formatBytes(
     }`
 }
 
-export function sameEntries<T extends object>(a: T, b: T) {
-    return JSON.stringify(a) === JSON.stringify(b)
+type GetUpdatedValuesReturn<T> =
+    | {
+          sameEntries: true
+          updatedValues: undefined
+      }
+    | { sameEntries: false; updatedValues: T }
+
+export function getUpdatedValues<T extends Record<string, unknown>>(
+    oldValues: T,
+    newValues: T
+): GetUpdatedValuesReturn<Partial<T>> {
+    const updatedValues: Partial<T> = {}
+    for (const key in newValues) {
+        if (newValues[key] !== oldValues[key]) {
+            updatedValues[key] = newValues[key]
+        }
+    }
+    if (Object.keys(updatedValues).length === 0) {
+        return { sameEntries: true, updatedValues: undefined }
+    }
+    return {
+        sameEntries: false,
+        updatedValues,
+    }
 }
