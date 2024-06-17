@@ -20,8 +20,9 @@ export const siteDetailsFormSchema = createSiteSchema.extend({
     logo: z.array(z.instanceof(File)),
 })
 
-export const siteDetailsActionSchema = createSiteSchema.extend({
-    logo: z.string({ message: "You must provide a logo" }),
+export const siteDetailsActionSchema = createSiteSchema.partial().extend({
+    id: z.string(),
+    logo: z.string({ message: "You must provide a logo" }).optional(),
 })
 
 export const createAuthorFormSchema = z.object({
@@ -47,6 +48,12 @@ export const getAuthorsSchema = paginationSchema.extend({
 export const editAuthorFormSchema = createAuthorActionSchema.extend({
     id: z.string(),
 })
+
+export const editAuthorActionSchema = createAuthorActionSchema
+    .partial()
+    .extend({
+        id: z.string(),
+    })
 
 export const deleteAuthorSchema = z.object({
     id: z.string(),
