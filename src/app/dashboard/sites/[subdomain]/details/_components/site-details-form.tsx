@@ -30,6 +30,7 @@ const SiteEditDetailsForm: FC<SiteEditDetailsFormDefaultValues> = (
         uploadFiles,
         editSite,
     } = useSiteDetails({
+        id: defaultValues.id,
         title: defaultValues.title,
         description: defaultValues.description,
         subdomain: defaultValues.subdomain,
@@ -40,6 +41,7 @@ const SiteEditDetailsForm: FC<SiteEditDetailsFormDefaultValues> = (
             <form
                 onSubmit={form.handleSubmit((values) =>
                     editSite({
+                        id: defaultValues.id,
                         title: values.title,
                         description: values.description,
                         subdomain: values.subdomain,

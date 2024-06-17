@@ -10,7 +10,7 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { type z } from "zod"
 
-import { handleGenericError, sameEntries } from "@/lib/utils"
+import { getUpdatedValues, handleGenericError } from "@/lib/utils"
 import { siteDetailsFormSchema } from "@/lib/validations/sites"
 
 import { useUploadFile } from "./use-upload-file"
@@ -33,8 +33,13 @@ export const useSiteDetails = (
 
     const { mutate, isPending } = useMutation({
         mutationFn: editSiteDetailsAction,
-        onSuccess: () => {
-            return toast.success("Your site is updated")
+        onSuccess: (_, variables) => {
+            toast.success("Your site is updated")
+            if (variables.subdomain) {
+                return router.push(
+                    `/dashboard/sites/${variables.subdomain}/details`
+                )
+            }
         },
         onError: (error) => {
             const errorCode = error.message
@@ -47,7 +52,9 @@ export const useSiteDetails = (
 
             if (errorCode === "UNAUTHORIZED") {
                 toast.error("You must be logged in to create a site")
-                return router.push("/sign-in?redirect=/dashboard/sites/details")
+                return router.push(
+                    `/sign-in?redirect=/dashboard/sites/${defaultValues.subdomain}/details`
+                )
             }
 
             if (errorCode === "NOT_FOUND") {
@@ -62,13 +69,25 @@ export const useSiteDetails = (
         },
     })
 
-    function onSubmit(data: SiteDetailsActionSchema) {
-        if (sameEntries(data, defaultValues)) {
+    function onSubmit({ id, ...data }: SiteDetailsActionSchema) {
+        console.log("Here")
+        const { sameEntries, updatedValues } = getUpdatedValues(
+            {
+                title: defaultValues.title,
+                description: defaultValues.description,
+                logo: defaultValues.logo!,
+                subdomain: defaultValues.subdomain,
+            },
+            data
+        )
+
+        if (sameEntries) {
             return toast.success("Your site is updated")
         }
 
         mutate({
-            ...data,
+            ...updatedValues,
+            id,
         })
     }
 

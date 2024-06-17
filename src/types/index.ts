@@ -5,6 +5,7 @@ import { type z } from "zod"
 
 import {
     type deleteAuthorSchema,
+    type editAuthorActionSchema,
     type editAuthorFormSchema,
     type getAuthorsSchema,
     type siteDetailsActionSchema,
@@ -30,13 +31,15 @@ export type SearchParams = Record<string, string>
 export interface UploadedFile<T = unknown> extends ClientUploadedFileData<T> {}
 
 export type SiteDetailsActionSchema = z.infer<typeof siteDetailsActionSchema>
-export type SiteEditDetailsFormDefaultValues = Omit<
-    SiteDetailsActionSchema,
-    "logo"
-> & {
+export type SiteEditDetailsFormDefaultValues = {
+    id: string
+    subdomain: string
+    title: string
+    description: string
     logo: string | null
 }
 
 export type GetAuthorsSchema = z.infer<typeof getAuthorsSchema>
 export type EditAuthorFormSchema = z.infer<typeof editAuthorFormSchema>
+export type EditAuthorActionSchema = z.infer<typeof editAuthorActionSchema>
 export type DeleteAuthorSchema = z.infer<typeof deleteAuthorSchema>

@@ -23,7 +23,7 @@ export const editSiteDetailsAction = async (
 
     const site = await db.site.findFirst({
         select: { id: true, subdomain: true },
-        where: { subdomain: data.subdomain, userId: session.user.id },
+        where: { id: data.id, userId: session.user.id },
     })
 
     if (!site) {
@@ -40,15 +40,12 @@ export const editSiteDetailsAction = async (
         }
     }
 
+    const { id, ...valuesToUpdate } = data
+
     await db.site.update({
-        data: {
-            title: data.title,
-            subdomain: data.subdomain,
-            description: data.description,
-            logo: data.logo,
-        },
+        data: valuesToUpdate,
         where: {
-            subdomain: site.subdomain,
+            id,
         },
     })
 }
