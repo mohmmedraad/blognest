@@ -80,12 +80,12 @@ type GetUpdatedValuesReturn<T> =
           sameEntries: true
           updatedValues: undefined
       }
-    | { sameEntries: false; updatedValues: T }
+    | { sameEntries: false; updatedValues: Partial<T> }
 
 export function getUpdatedValues<T extends Record<string, unknown>>(
-    oldValues: T,
+    oldValues: Partial<T>,
     newValues: T
-): GetUpdatedValuesReturn<Partial<T>> {
+): GetUpdatedValuesReturn<T> {
     const updatedValues: Partial<T> = {}
     for (const key in newValues) {
         if (newValues[key] !== oldValues[key]) {
