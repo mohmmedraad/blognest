@@ -44,6 +44,7 @@ const SitesPage: FC<SitesPageProps> = async ({}) => {
             createdAt: "desc",
         },
     })
+
     return (
         <DashboardMain>
             <CustomBreadcrumb pathname={"/dashboard/sites"} />
@@ -95,19 +96,12 @@ const SitesPage: FC<SitesPageProps> = async ({}) => {
                                     </CardHeader>
                                     <CardContent>
                                         <div className="flex items-center justify-between">
-                                            <Link
-                                                href={siteUrl(site.subdomain)}
+                                            <Badge
+                                                className="rounded-full"
+                                                variant={"outline"}
                                             >
-                                                <Badge
-                                                    className="rounded-full hover:underline hover:underline-offset-2"
-                                                    variant={"outline"}
-                                                >
-                                                    {siteUrl(
-                                                        site.subdomain,
-                                                        false
-                                                    )}
-                                                </Badge>
-                                            </Link>
+                                                {siteUrl(site.subdomain, false)}
+                                            </Badge>
                                             <p className="text-sm text-gray-500">
                                                 {format(
                                                     site.createdAt,
