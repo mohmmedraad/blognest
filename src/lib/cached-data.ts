@@ -19,6 +19,7 @@ export const getUserCachedSite = cache(
         try {
             const site = await db.site.findFirst({
                 select: {
+                    id: true,
                     title: true,
                     description: true,
                     logo: true,
