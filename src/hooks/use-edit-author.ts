@@ -1,19 +1,24 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { editAuthorAction } from "@/actions/authors/edit-author-action"
-import type { EditAuthorFormSchema } from "@/types"
+import type { EditAuthorActionSchema, EditAuthorFormSchema } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { type z } from "zod"
 
-import { handleGenericError } from "@/lib/utils"
+import { getUpdatedValues, handleGenericError } from "@/lib/utils"
 import { createAuthorFormSchema } from "@/lib/validations/sites"
 
 import { useUploadFile } from "./use-upload-file"
 
-export const useEditAuthor = ({ name, username }: EditAuthorFormSchema) => {
+export const useEditAuthor = ({
+    name,
+    username,
+    avatar,
+    id,
+}: EditAuthorFormSchema) => {
     const queryClient = useQueryClient()
     const [open, setOpen] = useState(false)
     const form = useForm<z.infer<typeof createAuthorFormSchema>>({
@@ -61,6 +66,24 @@ export const useEditAuthor = ({ name, username }: EditAuthorFormSchema) => {
         },
     })
 
+    function onSubmit(data: Omit<EditAuthorActionSchema, "id">) {
+        const { sameEntries, updatedValues } = getUpdatedValues(
+            {
+                name,
+                username,
+                avatar,
+            },
+            data
+        )
+        if (sameEntries) {
+            toast.success("Author created successfully")
+            setOpen(false)
+            return form.reset()
+        }
+
+        mutate({ id, ...updatedValues })
+    }
+
     return {
         form,
         open,
@@ -69,6 +92,6 @@ export const useEditAuthor = ({ name, username }: EditAuthorFormSchema) => {
         uploadedFiles,
         setOpen,
         uploadFiles,
-        editAuthor: mutate,
+        editAuthor: onSubmit,
     }
 }

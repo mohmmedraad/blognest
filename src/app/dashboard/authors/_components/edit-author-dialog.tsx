@@ -53,7 +53,6 @@ const EditAuthorDialog: FC<EditAuthorDialogProps> = ({
                     <form
                         onSubmit={form.handleSubmit((values) =>
                             editAuthor({
-                                id: defaultValues.id,
                                 name: values.name,
                                 username: values.username,
                                 avatar:

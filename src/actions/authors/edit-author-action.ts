@@ -2,18 +2,18 @@
 
 import { getServerAuthSession } from "@/server/auth"
 import { db } from "@/server/db"
-import type { EditAuthorFormSchema } from "@/types"
+import type { EditAuthorActionSchema } from "@/types"
 
-import { editAuthorFormSchema } from "@/lib/validations/sites"
+import { editAuthorActionSchema } from "@/lib/validations/sites"
 
-export const editAuthorAction = async (payload: EditAuthorFormSchema) => {
+export const editAuthorAction = async (payload: EditAuthorActionSchema) => {
     const session = await getServerAuthSession()
 
     if (!session?.user) {
         throw new Error("UNAUTHORIZED")
     }
 
-    const { success, data } = editAuthorFormSchema.safeParse(payload)
+    const { success, data } = editAuthorActionSchema.safeParse(payload)
 
     if (!success) {
         throw new Error("INVALID_DATA")
@@ -30,29 +30,29 @@ export const editAuthorAction = async (payload: EditAuthorFormSchema) => {
         throw new Error("NOT_FOUND")
     }
 
-    const isUsernameExist = await db.authors.findFirst({
-        where: {
-            userId: session.user.id,
-            username: data.username,
-            NOT: {
-                id: data.id,
+    if (data.username) {
+        const isUsernameExist = await db.authors.findFirst({
+            where: {
+                userId: session.user.id,
+                username: data.username,
+                NOT: {
+                    id: data.id,
+                },
             },
-        },
-    })
+        })
 
-    if (isUsernameExist) {
-        throw new Error("CONFLICT")
+        if (isUsernameExist) {
+            throw new Error("CONFLICT")
+        }
     }
+
+    const { id, ...valuesToUpdate } = data
 
     await db.authors.update({
         where: {
-            id: data.id,
+            id,
             userId: session.user.id,
         },
-        data: {
-            name: data.name,
-            avatar: data.avatar,
-            username: data.username,
-        },
+        data: valuesToUpdate,
     })
 }
