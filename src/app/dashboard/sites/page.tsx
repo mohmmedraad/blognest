@@ -105,7 +105,7 @@ const SitesPage: FC<SitesPageProps> = async ({}) => {
                                             <p className="text-sm text-gray-500">
                                                 {format(
                                                     site.createdAt,
-                                                    "yyy/MM/dd"
+                                                    "do MMMM yyyy"
                                                 )}
                                             </p>
                                         </div>
