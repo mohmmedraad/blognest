@@ -14,7 +14,7 @@ const OAUTH_PROVIDERS: OAuthProvider[] = [
         name: "Google",
         strategy: "google",
         label: "Sing in with Google",
-        Icon: Icons.Google,
+        Icon: Icons.google,
     },
 ]
 interface OAuthProvidersProps extends HTMLAttributes<HTMLDivElement> {}
