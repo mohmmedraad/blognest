@@ -30,7 +30,7 @@ export const editSiteDetailsAction = async (
         throw new Error("NOT_FOUND")
     }
 
-    if (site.subdomain !== data.subdomain) {
+    if (data.subdomain && site.subdomain !== data.subdomain) {
         const existingSite = await db.site.findFirst({
             where: { subdomain: data.subdomain },
         })
