@@ -1,43 +1,32 @@
 "use server"
 
-import { getServerAuthSession } from "@/server/auth"
+import { privateProcedure } from "@/actions/procedures/private"
 import { db } from "@/server/db"
-import { type z } from "zod"
+import { ZSAError } from "zsa"
 
 import { createAuthorActionSchema } from "@/lib/validations/sites"
 
-export const createAuthorAction = async (
-    payload: z.infer<typeof createAuthorActionSchema>
-) => {
-    const session = await getServerAuthSession()
+export const createAuthorAction = privateProcedure
+    .createServerAction()
+    .input(createAuthorActionSchema)
+    .handler(async ({ ctx, input }) => {
+        const isAuthorExist = await db.authors.findFirst({
+            where: {
+                userId: ctx.user.id,
+                username: input.username,
+            },
+        })
 
-    if (!session?.user) {
-        throw new Error("UNAUTHORIZED")
-    }
+        if (isAuthorExist) {
+            throw new ZSAError("CONFLICT")
+        }
 
-    const { success, data } = createAuthorActionSchema.safeParse(payload)
-
-    if (!success) {
-        throw new Error("INVALID_DATA")
-    }
-
-    const isAuthorExist = await db.authors.findFirst({
-        where: {
-            userId: session.user.id,
-            username: data.username,
-        },
+        await db.authors.create({
+            data: {
+                name: input.name,
+                avatar: input.avatar,
+                userId: ctx.user.id,
+                username: input.username,
+            },
+        })
     })
-
-    if (isAuthorExist) {
-        throw new Error("CONFLICT")
-    }
-
-    await db.authors.create({
-        data: {
-            name: data.name,
-            avatar: data.avatar,
-            userId: session.user.id,
-            username: data.username,
-        },
-    })
-}

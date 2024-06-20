@@ -1,58 +1,49 @@
 "use server"
 
-import { getServerAuthSession } from "@/server/auth"
+import { privateProcedure } from "@/actions/procedures/private"
 import { db } from "@/server/db"
-import type { EditAuthorActionSchema } from "@/types"
+import { ZSAError } from "zsa"
 
 import { editAuthorActionSchema } from "@/lib/validations/sites"
 
-export const editAuthorAction = async (payload: EditAuthorActionSchema) => {
-    const session = await getServerAuthSession()
-
-    if (!session?.user) {
-        throw new Error("UNAUTHORIZED")
-    }
-
-    const { success, data } = editAuthorActionSchema.safeParse(payload)
-
-    if (!success) {
-        throw new Error("INVALID_DATA")
-    }
-
-    const isAuthorExist = await db.authors.findFirst({
-        where: {
-            userId: session.user.id,
-            id: data.id,
-        },
-    })
-
-    if (!isAuthorExist) {
-        throw new Error("NOT_FOUND")
-    }
-
-    if (data.username) {
-        const isUsernameExist = await db.authors.findFirst({
+export const editAuthorAction = privateProcedure
+    .createServerAction()
+    .input(editAuthorActionSchema)
+    .handler(async ({ ctx, input }) => {
+        const isAuthorExist = await db.authors.findFirst({
             where: {
-                userId: session.user.id,
-                username: data.username,
-                NOT: {
-                    id: data.id,
-                },
+                userId: ctx.user.id,
+                id: input.id,
             },
         })
 
-        if (isUsernameExist) {
-            throw new Error("CONFLICT")
+        if (!isAuthorExist) {
+            throw new ZSAError("NOT_FOUND")
         }
-    }
 
-    const { id, ...valuesToUpdate } = data
+        if (input.username) {
+            const isUsernameExist = await db.authors.findFirst({
+                where: {
+                    userId: ctx.user.id,
+                    username: input.username,
+                    NOT: {
+                        id: input.id,
+                    },
+                },
+            })
 
-    await db.authors.update({
-        where: {
-            id,
-            userId: session.user.id,
-        },
-        data: valuesToUpdate,
+            if (isUsernameExist) {
+                throw new ZSAError("CONFLICT")
+            }
+        }
+
+        const { id, ...valuesToUpdate } = input
+
+        await db.authors.update({
+            where: {
+                id,
+                userId: ctx.user.id,
+            },
+            data: valuesToUpdate,
+        })
     })
-}

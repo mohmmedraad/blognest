@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation"
 import { editAuthorAction } from "@/actions/authors/edit-author-action"
 import type { EditAuthorActionSchema, EditAuthorFormSchema } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useQueryClient } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { type z } from "zod"
@@ -11,6 +11,7 @@ import { type z } from "zod"
 import { getUpdatedValues, handleGenericError } from "@/lib/utils"
 import { createAuthorFormSchema } from "@/lib/validations/sites"
 
+import { QueryKeyFactory, useServerActionMutation } from "./server-action-hooks"
 import { useUploadFile } from "./use-upload-file"
 
 export const useEditAuthor = ({
@@ -33,18 +34,17 @@ export const useEditAuthor = ({
         useUploadFile("imageUploader")
     const router = useRouter()
 
-    const { mutate, isPending } = useMutation({
-        mutationFn: editAuthorAction,
+    const { mutate, isPending } = useServerActionMutation(editAuthorAction, {
         onSuccess: async () => {
             toast.success("Author created successfully")
             setOpen(false)
             form.reset()
             await queryClient.invalidateQueries({
-                queryKey: ["authors"],
+                queryKey: QueryKeyFactory.getAuthors(),
             })
         },
         onError: (error) => {
-            if (error.message === "UNAUTHORIZED") {
+            if (error.message === "NOT_AUTHORIZED") {
                 toast.error("You must be logged in to create a author")
                 return router.push("/sign-in?redirect=/dashboard/authors")
             }
@@ -59,7 +59,7 @@ export const useEditAuthor = ({
                 return toast.error("Author not found")
             }
 
-            if (error.message === "INVALID_DATA") {
+            if (error.message === "INPUT_PARSE_ERROR") {
                 return toast.error("Your data is invalid")
             }
             return handleGenericError()

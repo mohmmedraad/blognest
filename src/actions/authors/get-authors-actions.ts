@@ -1,47 +1,42 @@
 "use server"
 
-import { getServerAuthSession } from "@/server/auth"
+import { privateProcedure } from "@/actions/procedures/private"
 import { db } from "@/server/db"
-import type { GetAuthorsSchema } from "@/types"
 
 import { getAuthorsSchema } from "@/lib/validations/sites"
 
-export const getAuthorsOptionsAction = async (payload: GetAuthorsSchema) => {
-    const { limit, page, search } = getAuthorsSchema.parse(payload)
-
-    const session = await getServerAuthSession()
-
-    if (!session?.user) {
-        throw new Error("UNAUTHORIZED")
-    }
-
-    const authors = await db.authors.findMany({
-        select: {
-            id: true,
-            name: true,
-            username: true,
-            avatar: true,
-            _count: {
-                select: {
-                    articles: true,
+export const getAuthorsOptionsAction = privateProcedure
+    .createServerAction()
+    .input(getAuthorsSchema)
+    .handler(async ({ ctx, input }) => {
+        const authors = await db.authors.findMany({
+            select: {
+                id: true,
+                name: true,
+                username: true,
+                avatar: true,
+                _count: {
+                    select: {
+                        articles: true,
+                    },
                 },
             },
-        },
-        where: {
-            username: {
-                contains: search,
+            where: {
+                username: {
+                    contains: input.search,
+                },
+                userId: ctx.user.id,
             },
-        },
-        take: limit,
-        skip: (page - 1) * limit,
-        orderBy: {
-            name: "asc",
-        },
-    })
+            take: input.limit,
+            skip: (input.page - 1) * input.limit,
+            orderBy: {
+                name: "asc",
+            },
+        })
 
-    return {
-        authors,
-        hasNextPage: authors.length === limit,
-        hasPreviousPage: page > 1,
-    }
-}
+        return {
+            authors,
+            hasNextPage: authors.length === input.limit,
+            hasPreviousPage: input.page > 1,
+        }
+    })

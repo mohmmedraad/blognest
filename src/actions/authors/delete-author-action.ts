@@ -1,39 +1,30 @@
 "use server"
 
-import { getServerAuthSession } from "@/server/auth"
+import { privateProcedure } from "@/actions/procedures/private"
 import { db } from "@/server/db"
-import type { DeleteAuthorSchema } from "@/types"
+import { ZSAError } from "zsa"
 
 import { deleteAuthorSchema } from "@/lib/validations/sites"
 
-export const deleteAuthorAction = async (payload: DeleteAuthorSchema) => {
-    const session = await getServerAuthSession()
+export const deleteAuthorAction = privateProcedure
+    .createServerAction()
+    .input(deleteAuthorSchema)
+    .handler(async ({ ctx, input }) => {
+        const isAuthorExist = await db.authors.findFirst({
+            where: {
+                userId: ctx.user.id,
+                id: input.id,
+            },
+        })
 
-    if (!session?.user) {
-        throw new Error("UNAUTHORIZED")
-    }
+        if (!isAuthorExist) {
+            throw new ZSAError("NOT_FOUND")
+        }
 
-    const { success, data } = deleteAuthorSchema.safeParse(payload)
-
-    if (!success) {
-        throw new Error("INVALID_DATA")
-    }
-
-    const isAuthorExist = await db.authors.findFirst({
-        where: {
-            userId: session.user.id,
-            id: data.id,
-        },
+        await db.authors.delete({
+            where: {
+                userId: ctx.user.id,
+                id: input.id,
+            },
+        })
     })
-
-    if (!isAuthorExist) {
-        throw new Error("NOT_FOUND")
-    }
-
-    await db.authors.delete({
-        where: {
-            userId: session.user.id,
-            id: data.id,
-        },
-    })
-}

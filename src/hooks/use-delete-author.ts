@@ -1,18 +1,19 @@
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { deleteAuthorAction } from "@/actions/authors/delete-author-action"
-import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useQueryClient } from "@tanstack/react-query"
 import { toast } from "sonner"
 
 import { handleGenericError } from "@/lib/utils"
+
+import { useServerActionMutation } from "./server-action-hooks"
 
 export const useDeleteAuthor = () => {
     const queryClient = useQueryClient()
     const [open, setOpen] = useState(false)
     const router = useRouter()
 
-    const { mutate, isPending } = useMutation({
-        mutationFn: deleteAuthorAction,
+    const { mutate, isPending } = useServerActionMutation(deleteAuthorAction, {
         onSuccess: async () => {
             toast.success("Author created successfully")
             setOpen(false)
@@ -21,16 +22,17 @@ export const useDeleteAuthor = () => {
             })
         },
         onError: (error) => {
-            if (error.message === "UNAUTHORIZED") {
+            const errorCode = error.code
+            if (errorCode === "NOT_AUTHORIZED") {
                 toast.error("You must be logged in to create a author")
                 return router.push("/sign-in?redirect=/dashboard/authors")
             }
 
-            if (error.message === "NOT_FOUND") {
+            if (errorCode === "NOT_FOUND") {
                 return toast.error("Author not found")
             }
 
-            if (error.message === "INVALID_DATA") {
+            if (errorCode === "INPUT_PARSE_ERROR") {
                 return toast.error("Your data is invalid")
             }
             return handleGenericError()
