@@ -118,9 +118,13 @@ import {
     ELEMENT_TR,
 } from "@udecode/plate-table"
 import { createTrailingBlockPlugin } from "@udecode/plate-trailing-block"
+import { toast } from "sonner"
+import { ClientUploadedFileData } from "uploadthing/types"
 
 import { autoformatPlugin } from "@/lib/plate/autoformat-plugin"
 import { dragOverCursorPlugin } from "@/lib/plate/drag-over-cursor-plugin"
+import { uploadFiles } from "@/lib/uploadthing"
+import { dataURLtoFile } from "@/lib/utils"
 import { BlockquoteElement } from "@/components/plate-ui/blockquote-element"
 import { CodeBlockElement } from "@/components/plate-ui/code-block-element"
 import { CodeLeaf } from "@/components/plate-ui/code-leaf"
@@ -174,7 +178,50 @@ export const plugins = createPlugins(
         createLinkPlugin({
             renderAfterEditable: LinkFloatingToolbar as RenderAfterEditable,
         }),
-        createImagePlugin(),
+        createImagePlugin({
+            options: {
+                uploadImage: async (dataUrl) => {
+                    // if (typeof dataUrl !== "string") {
+                    return "/placeholder.png"
+                    // }
+                    console.log({
+                        dataUrl,
+                    })
+
+                    const file = dataURLtoFile(dataUrl, "editor.png")
+                    console.log({ file })
+                    try {
+                        const res = await uploadFiles("imageUploader", {
+                            files: [file],
+                        })
+
+                        if (!res[0]) {
+                            toast.error("Failed to upload image")
+                            return "/placeholder.png"
+                        }
+
+                        return res[0].url
+                    } catch (error) {
+                        console.error(error)
+                        return "/placeholder.png"
+                    }
+
+                    // toast.promise(
+                    //     uploadFiles("imageUploader", {
+                    //         files: [file],
+                    //     }),
+                    //     {
+                    //         loading: `Uploading image...`,
+                    //         success: (data) => {
+                    //             res = data
+                    //             return `image uploaded`
+                    //         },
+                    //         error: `Failed to upload image`,
+                    //     }
+                    // )
+                },
+            },
+        }),
         createMediaEmbedPlugin(),
         createCaptionPlugin({
             options: {

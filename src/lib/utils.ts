@@ -100,3 +100,17 @@ export function getUpdatedValues<T extends Record<string, unknown>>(
         updatedValues,
     }
 }
+
+export function dataURLtoFile(dataUrl: string, filename: string) {
+    const arr = dataUrl.split(",")
+    // @ts-expect-error error
+    const mime = arr[0]?.match(/:(.*?);/)[1]
+    // @ts-expect-error error
+    const bstr = atob(arr[arr.length - 1])
+    let n = bstr.length
+    const u8arr = new Uint8Array(n)
+    while (n--) {
+        u8arr[n] = bstr.charCodeAt(n)
+    }
+    return new File([u8arr], filename, { type: mime })
+}
