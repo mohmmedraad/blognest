@@ -4,13 +4,14 @@ import Image from "next/image"
 import NextLink from "next/link"
 import { type getAuthorsOptionsAction } from "@/actions/authors/get-authors-actions"
 import { type ColumnDef } from "@tanstack/react-table"
+import { type inferServerActionReturnData } from "zsa"
 
 import TableColumnHeader from "@/components/table-column-header"
 
 import { TableRowActions } from "./table-row-actions"
 
-export type AuthorColumn = Awaited<
-    ReturnType<typeof getAuthorsOptionsAction>
+export type AuthorColumn = inferServerActionReturnData<
+    typeof getAuthorsOptionsAction
 >["authors"][number]
 
 export const columns: ColumnDef<AuthorColumn>[] = [
