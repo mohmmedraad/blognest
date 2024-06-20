@@ -1,41 +1,30 @@
 "use server"
 
-import { getServerAuthSession } from "@/server/auth"
+import { privateProcedure } from "@/actions/procedures/private"
 import { db } from "@/server/db"
-import { type z } from "zod"
+import { ZSAError } from "zsa"
 
 import { createSiteSchema } from "@/lib/validations/sites"
 
-export const createSiteAction = async (
-    payload: z.infer<typeof createSiteSchema>
-) => {
-    const session = await getServerAuthSession()
+export const createSiteAction = privateProcedure
+    .createServerAction()
+    .input(createSiteSchema)
+    .handler(async ({ ctx, input }) => {
+        const isSiteExist = await db.site.findFirst({
+            select: { id: true },
+            where: { subdomain: input.subdomain },
+        })
 
-    if (!session?.user) {
-        throw new Error("UNAUTHORIZED")
-    }
+        if (isSiteExist) {
+            throw new ZSAError("CONFLICT")
+        }
 
-    const { success, data } = createSiteSchema.safeParse(payload)
-
-    if (!success) {
-        throw new Error("INVALID_DATA")
-    }
-
-    const isSiteExist = await db.site.findFirst({
-        select: { id: true },
-        where: { subdomain: data.subdomain },
+        await db.site.create({
+            data: {
+                userId: ctx.user.id,
+                title: input.title,
+                subdomain: input.subdomain,
+                description: input.description,
+            },
+        })
     })
-
-    if (isSiteExist) {
-        throw new Error("CONFLICT")
-    }
-
-    await db.site.create({
-        data: {
-            userId: session.user.id,
-            title: data.title,
-            subdomain: data.subdomain,
-            description: data.description,
-        },
-    })
-}

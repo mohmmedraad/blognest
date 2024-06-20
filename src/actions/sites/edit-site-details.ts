@@ -1,51 +1,40 @@
 "use server"
 
-import { getServerAuthSession } from "@/server/auth"
+import { privateProcedure } from "@/actions/procedures/private"
 import { db } from "@/server/db"
-import { type z } from "zod"
+import { ZSAError } from "zsa"
 
 import { siteDetailsActionSchema } from "@/lib/validations/sites"
 
-export const editSiteDetailsAction = async (
-    payload: z.infer<typeof siteDetailsActionSchema>
-) => {
-    const session = await getServerAuthSession()
-
-    if (!session?.user) {
-        throw new Error("UNAUTHORIZED")
-    }
-
-    const { success, data } = siteDetailsActionSchema.safeParse(payload)
-
-    if (!success) {
-        throw new Error("INVALID_DATA")
-    }
-
-    const site = await db.site.findFirst({
-        select: { id: true, subdomain: true },
-        where: { id: data.id, userId: session.user.id },
-    })
-
-    if (!site) {
-        throw new Error("NOT_FOUND")
-    }
-
-    if (data.subdomain && site.subdomain !== data.subdomain) {
-        const existingSite = await db.site.findFirst({
-            where: { subdomain: data.subdomain },
+export const editSiteDetailsAction = privateProcedure
+    .createServerAction()
+    .input(siteDetailsActionSchema)
+    .handler(async ({ ctx, input }) => {
+        const site = await db.site.findFirst({
+            select: { id: true, subdomain: true },
+            where: { id: input.id, userId: ctx.user.id },
         })
 
-        if (existingSite) {
-            throw new Error("CONFLICT")
+        if (!site) {
+            throw new ZSAError("NOT_FOUND")
         }
-    }
 
-    const { id, ...valuesToUpdate } = data
+        if (input.subdomain && site.subdomain !== input.subdomain) {
+            const existingSite = await db.site.findFirst({
+                where: { subdomain: input.subdomain },
+            })
 
-    await db.site.update({
-        data: valuesToUpdate,
-        where: {
-            id,
-        },
+            if (existingSite) {
+                throw new ZSAError("CONFLICT")
+            }
+        }
+
+        const { id, ...valuesToUpdate } = input
+
+        await db.site.update({
+            data: valuesToUpdate,
+            where: {
+                id,
+            },
+        })
     })
-}

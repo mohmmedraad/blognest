@@ -5,7 +5,6 @@ import type {
     SiteEditDetailsFormDefaultValues,
 } from "@/types"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useMutation } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { type z } from "zod"
@@ -13,6 +12,7 @@ import { type z } from "zod"
 import { getUpdatedValues, handleGenericError } from "@/lib/utils"
 import { siteDetailsFormSchema } from "@/lib/validations/sites"
 
+import { useServerActionMutation } from "./server-action-hooks"
 import { useUploadFile } from "./use-upload-file"
 
 export const useSiteDetails = (
@@ -31,46 +31,47 @@ export const useSiteDetails = (
         useUploadFile("imageUploader")
     const router = useRouter()
 
-    const { mutate, isPending } = useMutation({
-        mutationFn: editSiteDetailsAction,
-        onSuccess: (_, variables) => {
-            toast.success("Your site is updated")
-            if (variables.subdomain) {
-                return router.push(
-                    `/dashboard/sites/${variables.subdomain}/details`
-                )
-            }
-        },
-        onError: (error) => {
-            const errorCode = error.message
+    const { mutate, isPending } = useServerActionMutation(
+        editSiteDetailsAction,
+        {
+            onSuccess: (_, variables) => {
+                toast.success("Your site is updated")
+                if (variables.subdomain) {
+                    return router.push(
+                        `/dashboard/sites/${variables.subdomain}/details`
+                    )
+                }
+            },
+            onError: (error) => {
+                const errorCode = error.code
 
-            if (errorCode === "CONFLICT") {
-                return form.setError("subdomain", {
-                    message: "This subdomain is already taken",
-                })
-            }
+                if (errorCode === "CONFLICT") {
+                    return form.setError("subdomain", {
+                        message: "This subdomain is already taken",
+                    })
+                }
 
-            if (errorCode === "UNAUTHORIZED") {
-                toast.error("You must be logged in to create a site")
-                return router.push(
-                    `/sign-in?redirect=/dashboard/sites/${defaultValues.subdomain}/details`
-                )
-            }
+                if (errorCode === "NOT_AUTHORIZED") {
+                    toast.error("You must be logged in to create a site")
+                    return router.push(
+                        `/sign-in?redirect=/dashboard/sites/${defaultValues.subdomain}/details`
+                    )
+                }
 
-            if (errorCode === "NOT_FOUND") {
-                return toast.error("Site not found")
-            }
+                if (errorCode === "NOT_FOUND") {
+                    return toast.error("Site not found")
+                }
 
-            if (errorCode === "INVALID_DATA") {
-                return toast.error("Your data is invalid")
-            }
+                if (errorCode === "INPUT_PARSE_ERROR") {
+                    return toast.error("Your data is invalid")
+                }
 
-            return handleGenericError()
-        },
-    })
+                return handleGenericError()
+            },
+        }
+    )
 
     function onSubmit({ id, ...data }: SiteDetailsActionSchema) {
-        console.log("Here")
         const { sameEntries, updatedValues } = getUpdatedValues(
             {
                 title: defaultValues.title,
