@@ -92,10 +92,10 @@ model Article {
     id String @id @default(cuid())
 
     title   String
-    slug    String @unique
+    slug    String   @unique
     content Json
-    topic   String
-    status  Status @default(unpublished)
+    topics  String[]
+    status  Status   @default(unpublished)
 
     autherId String
     auther   Authors @relation(fields: [autherId], references: [id])
