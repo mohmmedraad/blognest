@@ -91,12 +91,11 @@ enum Status {
 model Article {
     id String @id @default(cuid())
 
-    title     String
-    thumbnail String
-    slug      String @unique
-    content   Json
-    topic     String
-    status    Status @default(unpublished)
+    title   String
+    slug    String @unique
+    content Json
+    topic   String
+    status  Status @default(unpublished)
 
     autherId String
     auther   Authors @relation(fields: [autherId], references: [id])
