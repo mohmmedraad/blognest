@@ -97,8 +97,8 @@ model Article {
     topics  String[]
     status  Status   @default(unpublished)
 
-    autherId String
-    auther   Authors @relation(fields: [autherId], references: [id])
+    authorId String
+    author   Authors @relation(fields: [authorId], references: [id])
     likes    Likes[]
     views    Views[]
     siteId   String
