@@ -36,7 +36,6 @@ import {
     unwrapCodeBlock,
 } from "@udecode/plate-code-block"
 import { createComboboxPlugin } from "@udecode/plate-combobox"
-import { createCommentsPlugin, MARK_COMMENT } from "@udecode/plate-comments"
 import {
     createPlugins,
     isBlockAboveEmpty,
@@ -129,7 +128,6 @@ import { CodeBlockElement } from "@/components/plate-ui/code-block-element"
 import { CodeLeaf } from "@/components/plate-ui/code-leaf"
 import { CodeLineElement } from "@/components/plate-ui/code-line-element"
 import { CodeSyntaxLeaf } from "@/components/plate-ui/code-syntax-leaf"
-import { CommentLeaf } from "@/components/plate-ui/comment-leaf"
 import { EmojiCombobox } from "@/components/plate-ui/emoji-combobox"
 // import { ExcalidrawElement } from "@/components/plate-ui/excalidraw-element"
 import { HeadingElement } from "@/components/plate-ui/heading-element"
@@ -425,9 +423,6 @@ export const plugins = createPlugins(
         }),
         dragOverCursorPlugin,
 
-        // Collaboration
-        createCommentsPlugin(),
-
         // Deserialization
         createDeserializeDocxPlugin(),
         createDeserializeMdPlugin(),
@@ -472,7 +467,6 @@ export const plugins = createPlugins(
                 [MARK_SUBSCRIPT]: withProps(PlateLeaf, { as: "sub" }),
                 [MARK_SUPERSCRIPT]: withProps(PlateLeaf, { as: "sup" }),
                 [MARK_UNDERLINE]: withProps(PlateLeaf, { as: "u" }),
-                [MARK_COMMENT]: CommentLeaf,
             })
         ),
     }
