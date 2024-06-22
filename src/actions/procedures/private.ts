@@ -1,4 +1,4 @@
-"use server"
+// TODO: use server only package
 
 import { getServerAuthSession } from "@/server/auth"
 import { createServerActionProcedure, ZSAError } from "zsa"
