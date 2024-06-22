@@ -97,12 +97,12 @@ model Article {
     topics  String[]
     status  Status   @default(unpublished)
 
-    authorId String
-    author   Authors @relation(fields: [authorId], references: [id])
+    authorId String?
+    author   Authors? @relation(fields: [authorId], references: [id])
     likes    Likes[]
     views    Views[]
-    siteId   String
-    site     Site    @relation(fields: [siteId], references: [id])
+    siteId   String?
+    site     Site?    @relation(fields: [siteId], references: [id])
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
