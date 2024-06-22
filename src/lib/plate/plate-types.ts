@@ -5,7 +5,6 @@ import {
     type ELEMENT_CODE_BLOCK,
     type ELEMENT_CODE_LINE,
 } from "@udecode/plate-code-block"
-import { type TCommentText } from "@udecode/plate-comments"
 import {
     createPlateEditor,
     createPluginFactory,
@@ -101,7 +100,7 @@ export type PlainText = {
     text: string
 }
 
-export interface RichText extends TText, TCommentText {
+export interface RichText extends TText {
     bold?: boolean
     italic?: boolean
     underline?: boolean
