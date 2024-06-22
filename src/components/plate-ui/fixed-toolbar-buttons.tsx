@@ -1,5 +1,6 @@
+"use client"
+
 import React from "react"
-import Link from "next/link"
 import {
     MARK_BOLD,
     MARK_CODE,
@@ -7,13 +8,10 @@ import {
     MARK_STRIKETHROUGH,
     MARK_UNDERLINE,
 } from "@udecode/plate-basic-marks"
-import { useEditorReadOnly } from "@udecode/plate-common"
 import { MARK_BG_COLOR, MARK_COLOR } from "@udecode/plate-font"
 import { ListStyleType } from "@udecode/plate-indent-list"
 import { ELEMENT_IMAGE } from "@udecode/plate-media"
-import { Eye } from "lucide-react"
 
-import { Button, buttonVariants } from "@/components/ui/button"
 import { Icons, iconVariants } from "@/components/icons"
 import { AlignDropdownMenu } from "@/components/plate-ui/align-dropdown-menu"
 import { ColorDropdownMenu } from "@/components/plate-ui/color-dropdown-menu"
@@ -29,17 +27,14 @@ import { TableDropdownMenu } from "@/components/plate-ui/table-dropdown-menu"
 
 import { InsertDropdownMenu } from "./insert-dropdown-menu"
 import { MarkToolbarButton } from "./mark-toolbar-button"
-// import { ModeDropdownMenu } from "./mode-dropdown-menu"
-import SavingState from "./savaing-state"
 import { ToolbarGroup } from "./toolbar"
 import { TurnIntoDropdownMenu } from "./turn-into-dropdown-menu"
 
 interface FixedToolbarButtonsProps {
-    articleId: string
+    children?: React.ReactNode
 }
 
-export function FixedToolbarButtons({ articleId }: FixedToolbarButtonsProps) {
-    const readOnly = useEditorReadOnly()
+export function FixedToolbarButtons({ children }: FixedToolbarButtonsProps) {
     return (
         <div className="w-full overflow-hidden">
             <div
@@ -48,118 +43,95 @@ export function FixedToolbarButtons({ articleId }: FixedToolbarButtonsProps) {
                     transform: "translateX(calc(-1px))",
                 }}
             >
-                {!readOnly && (
-                    <>
-                        <ToolbarGroup noSeparator>
-                            <InsertDropdownMenu />
-                            <TurnIntoDropdownMenu />
-                        </ToolbarGroup>
+                <ToolbarGroup noSeparator>
+                    <InsertDropdownMenu />
+                    <TurnIntoDropdownMenu />
+                </ToolbarGroup>
 
-                        <ToolbarGroup>
-                            <MarkToolbarButton
-                                tooltip="Bold (⌘+B)"
-                                nodeType={MARK_BOLD}
-                            >
-                                <Icons.bold />
-                            </MarkToolbarButton>
-                            <MarkToolbarButton
-                                tooltip="Italic (⌘+I)"
-                                nodeType={MARK_ITALIC}
-                            >
-                                <Icons.italic />
-                            </MarkToolbarButton>
-                            <MarkToolbarButton
-                                tooltip="Underline (⌘+U)"
-                                nodeType={MARK_UNDERLINE}
-                            >
-                                <Icons.underline />
-                            </MarkToolbarButton>
+                <ToolbarGroup>
+                    <MarkToolbarButton
+                        tooltip="Bold (⌘+B)"
+                        nodeType={MARK_BOLD}
+                    >
+                        <Icons.bold />
+                    </MarkToolbarButton>
+                    <MarkToolbarButton
+                        tooltip="Italic (⌘+I)"
+                        nodeType={MARK_ITALIC}
+                    >
+                        <Icons.italic />
+                    </MarkToolbarButton>
+                    <MarkToolbarButton
+                        tooltip="Underline (⌘+U)"
+                        nodeType={MARK_UNDERLINE}
+                    >
+                        <Icons.underline />
+                    </MarkToolbarButton>
 
-                            <MarkToolbarButton
-                                tooltip="Strikethrough (⌘+⇧+M)"
-                                nodeType={MARK_STRIKETHROUGH}
-                            >
-                                <Icons.strikethrough />
-                            </MarkToolbarButton>
-                            <MarkToolbarButton
-                                tooltip="Code (⌘+E)"
-                                nodeType={MARK_CODE}
-                            >
-                                <Icons.code />
-                            </MarkToolbarButton>
-                        </ToolbarGroup>
+                    <MarkToolbarButton
+                        tooltip="Strikethrough (⌘+⇧+M)"
+                        nodeType={MARK_STRIKETHROUGH}
+                    >
+                        <Icons.strikethrough />
+                    </MarkToolbarButton>
+                    <MarkToolbarButton
+                        tooltip="Code (⌘+E)"
+                        nodeType={MARK_CODE}
+                    >
+                        <Icons.code />
+                    </MarkToolbarButton>
+                </ToolbarGroup>
 
-                        <ToolbarGroup>
-                            <ColorDropdownMenu
-                                nodeType={MARK_COLOR}
-                                tooltip="Text Color"
-                            >
-                                <Icons.color
-                                    className={iconVariants({
-                                        variant: "toolbar",
-                                    })}
-                                />
-                            </ColorDropdownMenu>
-                            <ColorDropdownMenu
-                                nodeType={MARK_BG_COLOR}
-                                tooltip="Highlight Color"
-                            >
-                                <Icons.bg
-                                    className={iconVariants({
-                                        variant: "toolbar",
-                                    })}
-                                />
-                            </ColorDropdownMenu>
-                        </ToolbarGroup>
+                <ToolbarGroup>
+                    <ColorDropdownMenu
+                        nodeType={MARK_COLOR}
+                        tooltip="Text Color"
+                    >
+                        <Icons.color
+                            className={iconVariants({
+                                variant: "toolbar",
+                            })}
+                        />
+                    </ColorDropdownMenu>
+                    <ColorDropdownMenu
+                        nodeType={MARK_BG_COLOR}
+                        tooltip="Highlight Color"
+                    >
+                        <Icons.bg
+                            className={iconVariants({
+                                variant: "toolbar",
+                            })}
+                        />
+                    </ColorDropdownMenu>
+                </ToolbarGroup>
 
-                        <ToolbarGroup>
-                            <AlignDropdownMenu />
+                <ToolbarGroup>
+                    <AlignDropdownMenu />
 
-                            <LineHeightDropdownMenu />
+                    <LineHeightDropdownMenu />
 
-                            <IndentListToolbarButton
-                                nodeType={ListStyleType.Disc}
-                            />
-                            <IndentListToolbarButton
-                                nodeType={ListStyleType.Decimal}
-                            />
+                    <IndentListToolbarButton nodeType={ListStyleType.Disc} />
+                    <IndentListToolbarButton nodeType={ListStyleType.Decimal} />
 
-                            <OutdentToolbarButton />
-                            <IndentToolbarButton />
-                        </ToolbarGroup>
+                    <OutdentToolbarButton />
+                    <IndentToolbarButton />
+                </ToolbarGroup>
 
-                        <ToolbarGroup>
-                            <LinkToolbarButton />
+                <ToolbarGroup>
+                    <LinkToolbarButton />
 
-                            <MediaToolbarButton nodeType={ELEMENT_IMAGE} />
+                    <MediaToolbarButton nodeType={ELEMENT_IMAGE} />
 
-                            <TableDropdownMenu />
+                    <TableDropdownMenu />
 
-                            <EmojiDropdownMenu />
+                    <EmojiDropdownMenu />
 
-                            <MoreDropdownMenu />
-                        </ToolbarGroup>
-                    </>
-                )}
+                    <MoreDropdownMenu />
+                </ToolbarGroup>
 
                 <div className="grow" />
 
-                <ToolbarGroup noSeparator>
-                    {/* <CommentToolbarButton /> */}
-                    <SavingState articleId={articleId} />
-                    <Link
-                        href={`/dashboard/articles/${articleId}/preview`}
-                        className={buttonVariants({
-                            className: "gap-1",
-                            variant: "outline",
-                        })}
-                    >
-                        <Eye className="size-4" />
-                        Preview
-                    </Link>
-                    <Button>Publish</Button>
-                    {/* <ModeDropdownMenu /> */}
-                </ToolbarGroup>
+                <ToolbarGroup noSeparator>{children}</ToolbarGroup>
             </div>
         </div>
     )
