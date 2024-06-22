@@ -57,6 +57,7 @@ model User {
     accounts Account[]
     sessions Session[]
     Authors  Authors[]
+    Articles Article[]
 }
 
 model VerificationToken {
@@ -97,6 +98,8 @@ model Article {
     topics  String[]
     status  Status   @default(unpublished)
 
+    userId   String
+    user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
     authorId String?
     author   Authors? @relation(fields: [authorId], references: [id])
     likes    Likes[]
