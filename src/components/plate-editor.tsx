@@ -1,10 +1,10 @@
 "use client"
 
 import React, { useRef } from "react"
+import { type Prisma } from "@prisma/client"
 import { cn } from "@udecode/cn"
 import { CommentsProvider } from "@udecode/plate-comments"
 import { Plate, type TElement } from "@udecode/plate-common"
-// import { ELEMENT_PARAGRAPH } from "@udecode/plate-paragraph"
 import { DndProvider } from "react-dnd"
 import { HTML5Backend } from "react-dnd-html5-backend"
 
@@ -14,27 +14,25 @@ import { plugins } from "@/lib/plate/plate-plugins"
 import { CommentsPopover } from "@/components/plate-ui/comments-popover"
 import { CursorOverlay } from "@/components/plate-ui/cursor-overlay"
 import { Editor } from "@/components/plate-ui/editor"
-import { FixedToolbar } from "@/components/plate-ui/fixed-toolbar"
-import { FixedToolbarButtons } from "@/components/plate-ui/fixed-toolbar-buttons"
 import { FloatingToolbar } from "@/components/plate-ui/floating-toolbar"
 import { FloatingToolbarButtons } from "@/components/plate-ui/floating-toolbar-buttons"
 import { MentionCombobox } from "@/components/plate-ui/mention-combobox"
 
 interface PlateEditorProps {
-    initialValue?: TElement[]
-    articleId: string
+    content: Prisma.JsonValue
+    children: React.ReactNode
 }
 
-export default function PlateEditor({
-    initialValue,
-    articleId,
-}: PlateEditorProps) {
+export default function PlateEditor({ content, children }: PlateEditorProps) {
     const containerRef = useRef(null)
 
     return (
         <DndProvider backend={HTML5Backend}>
             <CommentsProvider users={commentsUsers} myUserId={myUserId}>
-                <Plate plugins={plugins} initialValue={initialValue}>
+                <Plate
+                    plugins={plugins}
+                    initialValue={content as unknown as TElement[]}
+                >
                     <div
                         ref={containerRef}
                         className={cn(
@@ -43,9 +41,7 @@ export default function PlateEditor({
                             "[&_.slate-start-area-left]:!w-[64px] [&_.slate-start-area-right]:!w-[64px] [&_.slate-start-area-top]:!h-4"
                         )}
                     >
-                        <FixedToolbar>
-                            <FixedToolbarButtons articleId={articleId} />
-                        </FixedToolbar>
+                        {children}
 
                         <Editor
                             className="min-h-screen px-[96px] py-16"
