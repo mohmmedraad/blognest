@@ -12,30 +12,22 @@ import {
     SelectTrigger,
     SelectValue,
 } from "./ui/select"
-import { Skeleton } from "./ui/skeleton"
 
 interface SiteSelectProps {
-    value?: string
+    defaultValue?: string
     onValueChange?: (value: string) => void
 }
 
-export function SiteSelect({ value, onValueChange }: SiteSelectProps) {
-    const { sites, isFetching } = useSiteSelectOptions()
+export function SiteSelect({ defaultValue, onValueChange }: SiteSelectProps) {
+    const { sites } = useSiteSelectOptions()
 
     return (
-        <Select value={value} onValueChange={onValueChange}>
-            <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Select a fruit" />
+        <Select defaultValue={defaultValue} onValueChange={onValueChange}>
+            <SelectTrigger>
+                <SelectValue placeholder="Select a site" />
             </SelectTrigger>
             <SelectContent>
                 <SelectGroup>
-                    {isFetching &&
-                        new Array(5).fill(0).map((_, i) => (
-                            <div key={i} className="flex flex-col gap-2">
-                                <Skeleton className="h-9 w-full" />
-                            </div>
-                        ))}
-
                     {sites.map((site) => (
                         <SelectItem key={site.id} value={site.id}>
                             <div className="flex items-center gap-2">
