@@ -28,9 +28,12 @@ export const usePublishArticle = (defaultValues: DefaultValues) => {
     const pathname = usePathname()
 
     const { mutate, isPending } = useServerActionMutation(updateArticleAction, {
-        onSuccess: () => {
+        onSuccess: (_, variables) => {
             toast.success("Article is updated")
             setOpen(false)
+            if (variables.slug) {
+                return router.push(`/dashboard/articles/${variables.slug}/edit`)
+            }
         },
         onError: (error) => {
             const errorCode = error.code
