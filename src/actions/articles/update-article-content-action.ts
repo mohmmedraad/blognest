@@ -13,9 +13,7 @@ export const updateArticleContentAction = privateProcedure
         const isArticleExist = await db.article.findFirst({
             where: {
                 id: input.id,
-                site: {
-                    userId: ctx.user.id,
-                },
+                userId: ctx.user.id,
             },
         })
 
