@@ -3,21 +3,20 @@
 import { type FC } from "react"
 
 import { cn } from "@/lib/utils"
-import { useSaveArticle } from "@/hooks/use-save-article"
+import { useSaveArticleContent } from "@/hooks/use-save-article-content"
 
 interface SavingStateProps {
     articleId: string
 }
 
 const SavingState: FC<SavingStateProps> = ({ articleId }) => {
-    const { saving } = useSaveArticle(articleId)
+    const { saving } = useSaveArticleContent(articleId)
 
     return (
         <p
             className={cn("text-sm", {
-                "text-green-500": saving === "Saved",
+                "text-green-500 animate-fade-out": saving === "Saved",
                 "text-red-500": saving === "Not Saved",
-                "text-yellow-500": saving === "Saving...",
             })}
         >
             {saving}
