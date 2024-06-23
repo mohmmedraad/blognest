@@ -55,7 +55,7 @@ const EditArticlePage: FC<NewArticlePageProps> = async ({
         },
     })
 
-    if (!article) return
+    if (!article) return notFound()
 
     return (
         <DashboardMain>
