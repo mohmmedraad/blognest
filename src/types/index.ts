@@ -3,6 +3,7 @@ import { type BuiltInProviderType } from "next-auth/providers/index"
 import { type ClientUploadedFileData } from "uploadthing/types"
 import { type z } from "zod"
 
+import { type updateArticleSchema } from "@/lib/validations/articles"
 import {
     type deleteAuthorSchema,
     type editAuthorActionSchema,
@@ -43,3 +44,5 @@ export type GetAuthorsSchema = z.infer<typeof getAuthorsSchema>
 export type EditAuthorFormSchema = z.infer<typeof editAuthorFormSchema>
 export type EditAuthorActionSchema = z.infer<typeof editAuthorActionSchema>
 export type DeleteAuthorSchema = z.infer<typeof deleteAuthorSchema>
+
+export type EditArticleSchema = z.infer<typeof updateArticleSchema>
