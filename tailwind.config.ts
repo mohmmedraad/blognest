@@ -90,6 +90,10 @@ const config = {
                         backgroundPosition: "var(--bg-size) 0",
                     },
                 },
+                fadeOut: {
+                    "0%": { opacity: "1" },
+                    "100%": { opacity: "0", display: "none" },
+                },
             },
             animation: {
                 "accordion-down": "accordion-down 0.2s ease-out",
@@ -98,6 +102,7 @@ const config = {
                 "marquee-vertical":
                     "marquee-vertical var(--duration) linear infinite",
                 gradient: "gradient 8s linear infinite",
+                "fade-out": "fadeOut 2s ease-in-out forwards",
             },
         },
     },
