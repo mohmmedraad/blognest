@@ -6,6 +6,7 @@ import {
 
 export const QueryKeyFactory = createServerActionsKeyFactory({
     getAuthors: () => ["authors"],
+    getArticles: () => ["articles"],
     getAuthorsSelectOptions: () => ["authors-select-options"],
     getSitesSelectOptions: () => ["sites-select-options"],
 })
