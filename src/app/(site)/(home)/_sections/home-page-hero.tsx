@@ -42,11 +42,15 @@ const HomePageHero: FC<HomePageHeroProps> = ({}) => {
                         templates, write content, and analyze your audience.
                     </p>
                     <div className="mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-                        <Link href={"/dashboard/create-blog"} size={"xl"}>
-                            Create Blog
+                        <Link href={"/dashboard/sign-up"} size={"xl"}>
+                            Get Started
                         </Link>
-                        <Link href={"/blogs"} variant={"outline"} size={"xl"}>
-                            Explore Blogs
+                        <Link
+                            href={"/dashboard/sites"}
+                            variant={"outline"}
+                            size={"xl"}
+                        >
+                            Create a Site
                         </Link>
                     </div>
                 </div>
