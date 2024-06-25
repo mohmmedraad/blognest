@@ -23,7 +23,7 @@ const Header: FC<HeaderProps> = ({}) => {
                 <div className="flex items-center justify-center gap-5">
                     <nav className="hidden sm:block">
                         <ul className="flex gap-5">
-                            {site.links.map((link, i) => (
+                            {/* {site.links.map((link, i) => (
                                 <li key={link.name}>
                                     <NextLink
                                         key={i}
@@ -34,7 +34,7 @@ const Header: FC<HeaderProps> = ({}) => {
                                         {link.name}
                                     </NextLink>
                                 </li>
-                            ))}
+                            ))} */}
                         </ul>
                     </nav>
                     <Link href={"/dashboard"} size={"lg"}>
