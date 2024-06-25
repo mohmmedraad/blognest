@@ -37,8 +37,8 @@ const Header: FC<HeaderProps> = ({}) => {
                             ))}
                         </ul>
                     </nav>
-                    <Link href={"/login"} size={"lg"}>
-                        Login
+                    <Link href={"/dashboard"} size={"lg"}>
+                        Dashboard
                     </Link>
                 </div>
             </div>
