@@ -44,7 +44,7 @@ export const ArticlesTable: FC<ArticlesTableProps> = ({}) => {
                     <SearchIcon className="absolute left-2.5 top-2.5 size-4 text-muted-foreground" />
                     <SearchInput
                         className="w-full  max-w-80 pl-8"
-                        placeholder="Search authors"
+                        placeholder="Search article"
                         param="search"
                     />
                 </div>
