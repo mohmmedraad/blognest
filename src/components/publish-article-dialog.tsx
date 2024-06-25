@@ -1,6 +1,6 @@
 "use client"
 
-import { type ComponentProps, type FC } from "react"
+import { type ReactNode, type FC } from "react"
 import type { EditArticleSchema } from "@/types"
 
 import { usePublishArticle } from "@/hooks/use-publish-article"
@@ -34,14 +34,14 @@ import {
     SelectValue,
 } from "./ui/select"
 
-interface PublishArticleDialogProps extends ComponentProps<typeof Button> {
+interface PublishArticleDialogProps{
     editArticleValues: EditArticleSchema
+    children: ReactNode
 }
 
 const PublishArticleDialog: FC<PublishArticleDialogProps> = ({
     children,
     editArticleValues,
-    ...props
 }) => {
     const { form, isPending, open, setOpen, createSite } = usePublishArticle({
         ...editArticleValues,
@@ -50,7 +50,7 @@ const PublishArticleDialog: FC<PublishArticleDialogProps> = ({
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
-                <Button {...props}>{children}</Button>
+                {children}
             </DialogTrigger>
             <DialogContent className="max-h-[90vh] overflow-y-auto">
                 <DialogHeader>
