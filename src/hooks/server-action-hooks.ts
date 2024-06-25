@@ -5,7 +5,7 @@ import {
 } from "zsa-react-query"
 
 export const QueryKeyFactory = createServerActionsKeyFactory({
-    getAuthors: () => ["authors"],
+    getAuthors: (keys: string[] = []) => ["authors", ...keys],
     getArticles: (keys: string[] = []) => ["articles", ...keys],
     getAuthorsSelectOptions: () => ["authors-select-options"],
     getSitesSelectOptions: () => ["sites-select-options"],

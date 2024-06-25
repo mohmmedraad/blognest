@@ -15,7 +15,7 @@ export const useAuthors = () => {
             search: searchValue,
             page,
         },
-        queryKey: ["authors"],
+        queryKey: ["authors", searchValue, page.toString()],
     })
 
     return { ...query, search, setPage, setSearch }
