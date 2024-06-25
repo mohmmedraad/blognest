@@ -2,7 +2,7 @@
 
 import { type FC } from "react"
 import Link from "next/link"
-import { SearchIcon, UserPlus } from "lucide-react"
+import { Plus, SearchIcon } from "lucide-react"
 
 import { useArticles } from "@/hooks/use-articles"
 import { buttonVariants } from "@/components/ui/button"
@@ -36,7 +36,7 @@ export const ArticlesTable: FC<ArticlesTableProps> = ({}) => {
                         className: "gap-1.5",
                     })}
                 >
-                    <UserPlus className="size-5" /> Add Article
+                    <Plus className="size-5" /> Add Article
                 </Link>
             </div>
             <DataTableToolbar>
