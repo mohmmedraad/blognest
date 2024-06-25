@@ -1,5 +1,7 @@
 import { z } from "zod"
 
+import { paginationSchema } from "./params"
+
 export const updateArticleSchema = z.object({
     id: z.string(),
     site: z.string().optional(),
@@ -32,4 +34,23 @@ export const updateArticleContentSchema = z.object({
     content: z.array(z.any()).min(1, {
         message: "Content must not be empty",
     }),
+})
+
+export const getArticlesSchema = paginationSchema.extend({
+    search: z.string().optional().default(""),
+    author: z.string().optional(),
+    site: z.string().optional(),
+    sortBy: z
+        .string()
+        .transform((value) => value.split("."))
+        .pipe(
+            z.tuple([z.enum(["createdAt", "title"]), z.enum(["asc", "desc"])])
+        )
+        .optional()
+        .default("createdAt.desc")
+        .catch(["createdAt", "desc"]),
+})
+
+export const deleteArticleSchema = z.object({
+    id: z.string(),
 })
