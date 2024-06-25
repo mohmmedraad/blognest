@@ -37,12 +37,7 @@ export const site = {
         telegram: "https://t.me/mohammedraad_0",
     },
     creator: "mohammed raad",
-    links: [
-        {
-            name: "Blogs",
-            href: "/blogs",
-        },
-    ],
+    links: [],
 }
 
 export const DASHBOARD_PRIMARY_LINKS = [
