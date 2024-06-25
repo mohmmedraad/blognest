@@ -5,7 +5,7 @@ import { db } from "@/server/db"
 import { Eye } from "lucide-react"
 
 import { getCachedUser } from "@/lib/cached-data"
-import { buttonVariants } from "@/components/ui/button"
+import { Button, buttonVariants } from "@/components/ui/button"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import DashboardMain from "@/components/dashboard-main"
 import PlateEditor from "@/components/plate-editor"
@@ -90,7 +90,7 @@ const EditArticlePage: FC<NewArticlePageProps> = async ({
                                         site: article.site?.id,
                                     }}
                                 >
-                                    Publish
+                                    <Button>Publish</Button>
                                 </PublishArticleDialog>
                             </FixedToolbarButtons>
                         </FixedToolbar>
