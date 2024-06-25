@@ -1,5 +1,6 @@
 "use client"
 
+import Link from "next/link"
 import { type Row, type Table } from "@tanstack/react-table"
 import { MoreHorizontal } from "lucide-react"
 import { toast } from "sonner"
@@ -17,7 +18,6 @@ import {
 
 import { type ArticleColumn } from "./columns"
 import DeleteArticleDialog from "./delete-article-dialog"
-import Link from "next/link"
 
 interface TableRowActionsProps {
     row: Row<ArticleColumn>
@@ -53,10 +53,15 @@ export function TableRowActions({ row }: TableRowActionsProps) {
                     Copy article url
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-            
-                    <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                        <Link href={`/dashboard/articles/${article.slug}`}>Edit</Link>
-                    </DropdownMenuItem>
+
+                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                    <Link
+                        className="size-full"
+                        href={`/dashboard/articles/${article.slug}/edit`}
+                    >
+                        Edit
+                    </Link>
+                </DropdownMenuItem>
                 <DeleteArticleDialog id={article.id} title={article.title}>
                     <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
                         Delete
