@@ -4,10 +4,10 @@ import { type FC } from "react"
 import { SearchIcon, UserPlus } from "lucide-react"
 
 import { useAuthors } from "@/hooks/use-authors"
-import { Input } from "@/components/ui/input"
 import { DataTable } from "@/components/data-table"
 import { DataTablePagination } from "@/components/data-table-pagination"
 import { DataTableToolbar } from "@/components/data-table-toolbar"
+import SearchInput from "@/components/search-input"
 import TableDescription from "@/components/table-description"
 import TableHeading from "@/components/table-heading"
 
@@ -17,7 +17,7 @@ import CreateAuthorDialog from "./create-author-dialog"
 interface AuthorsTableProps {}
 
 export const AuthorsTable: FC<AuthorsTableProps> = ({}) => {
-    const { data, isFetching, search, setSearch, setPage } = useAuthors()
+    const { data, isFetching, setPage } = useAuthors()
 
     return (
         <div className="mt-8 rounded-md border bg-white">
@@ -35,12 +35,10 @@ export const AuthorsTable: FC<AuthorsTableProps> = ({}) => {
             <DataTableToolbar>
                 <div className="relative">
                     <SearchIcon className="absolute left-2.5 top-2.5 size-4 text-muted-foreground" />
-                    <Input
+                    <SearchInput
                         className="w-full  max-w-80 pl-8"
                         placeholder="Search authors"
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        type="search"
+                        param="search"
                     />
                 </div>
             </DataTableToolbar>
