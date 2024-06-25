@@ -51,7 +51,7 @@ export const AuthorsTable: FC<AuthorsTableProps> = ({}) => {
                         <p className="mt-10 text-4xl font-bold text-gray-900">
                             NO Authors
                         </p>
-                        <p className="mt-4 max-w-[512px] text-xl text-gray-600">
+                        <p className="mx-auto mt-4 max-w-[512px] text-xl text-gray-600">
                             Change your filter or create new Authors to see them
                             here.
                         </p>
