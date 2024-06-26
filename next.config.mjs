@@ -6,7 +6,7 @@ await import("./src/env.js")
 
 const nextConfig = {
     images: {
-        domains: ["avatar.vercel.sh", "utfs.io"],
+        domains: ["avatar.vercel.sh", "utfs.io", "lh3.googleusercontent.com"],
     },
 }
 
