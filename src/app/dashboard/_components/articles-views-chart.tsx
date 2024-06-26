@@ -1,5 +1,3 @@
-"use client"
-
 import { type FC } from "react"
 import {
     Line,
@@ -25,7 +23,7 @@ interface ArticleViewsChartProps {
     }[]
 }
 
-const ArticleViewsChart: FC<ArticleViewsChartProps> = ({ data }) => {
+export const ArticleViewsChart: FC<ArticleViewsChartProps> = ({ data }) => {
     return (
         <Card className="mt-6">
             <CardHeader>
@@ -90,5 +88,3 @@ const ArticleViewsChart: FC<ArticleViewsChartProps> = ({ data }) => {
         </Card>
     )
 }
-
-export default ArticleViewsChart

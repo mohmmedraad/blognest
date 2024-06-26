@@ -6,8 +6,7 @@ import DashboardHeading from "@/components/dashboard-heading"
 import DashboardMain from "@/components/dashboard-main"
 import DashboardParagraph from "@/components/dashboard-paragraph"
 
-import ArticleViewsChart from "./_components/articles-views-chart"
-import SitesVisitersChart from "./_components/sites-visiters-chart"
+import Charts from "./_components/charts"
 
 interface DashboardPageProps {}
 
@@ -43,10 +42,10 @@ const DashboardPage: FC<DashboardPageProps> = async ({}) => {
             <DashboardParagraph>
                 Welcome back, {user.name?.split(" ")[0]}!.
             </DashboardParagraph>
-            <div className="mt-8">
-                <SitesVisitersChart data={sitesVisiters} />
-                <ArticleViewsChart data={articlesViews} />
-            </div>
+            <Charts
+                sitesVisiters={sitesVisiters}
+                articlesViews={articlesViews}
+            />
         </DashboardMain>
     )
 }
