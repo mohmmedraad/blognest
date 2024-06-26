@@ -16,7 +16,7 @@ interface SiteLayoutProps {
     }
 }
 
-const BLOG_LINKS = [
+const SITE_LINKS = [
     {
         href: "/dashboard/sites/(subdomain)",
         label: "Overview",
@@ -26,8 +26,8 @@ const BLOG_LINKS = [
         label: "Details",
     },
     {
-        href: "/dashboard/sites/(subdomain)/articles",
-        label: "Articles",
+        href: "/dashboard/sites/(subdomain)/themes",
+        label: "Themes",
     },
     {
         href: "/dashboard/sites/(subdomain)/settings",
@@ -59,7 +59,7 @@ const SiteLayout: FC<SiteLayoutProps> = async ({
             <SiteBreadcrumb />
             <DashboardHeading>{site.title}</DashboardHeading>
             <nav className="mb-8 mt-6 flex gap-1 rounded-[10px] border border-gray-200 bg-gray-50 p-1">
-                {BLOG_LINKS.map((link) => (
+                {SITE_LINKS.map((link) => (
                     <NavLink
                         key={link.label}
                         href={link.href.replace("(subdomain)", site.subdomain)}
