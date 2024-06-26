@@ -1,5 +1,6 @@
 import { type FC } from "react"
 
+import DashboardHeader from "./_components/dashboard-header"
 import Sidebar from "./_components/sidebar"
 
 interface DashboardLayoutProps {
@@ -8,9 +9,12 @@ interface DashboardLayoutProps {
 
 const DashboardLayout: FC<DashboardLayoutProps> = async ({ children }) => {
     return (
-        <div className="flex min-h-screen w-full bg-background">
-            <Sidebar />
-            {children}
+        <div>
+            <DashboardHeader />
+            <div className="flex min-h-screen w-full bg-background">
+                <Sidebar />
+                {children}
+            </div>
         </div>
     )
 }
