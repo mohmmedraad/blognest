@@ -18,7 +18,12 @@ export async function middleware(req: NextRequest) {
         return NextResponse.rewrite(url)
     }
 
-    const token = await getToken({ req, secret: env.NEXTAUTH_SECRET })
+    let token
+    try {
+        token = await getToken({ req, secret: env.NEXTAUTH_SECRET })
+    } catch (err) {
+        token = null
+    }
     const isLoggedIn = token !== null
     const route = url.pathname
 
