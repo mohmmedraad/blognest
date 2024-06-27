@@ -1,16 +1,26 @@
-import { type NextRequest } from "next/server"
+import { NextResponse, type NextRequest } from "next/server"
 import { getToken } from "next-auth/jwt"
 
 import { env } from "./env"
+import { getValidSubdomain } from "./lib/utils"
 
 const PUBLIC_ROUTES = ["/", "/blogs", "/login", "/sign-up", "/verify"]
 const AUTH_ROUTES = ["/dashboard"]
 
 export async function middleware(req: NextRequest) {
-    const token = await getToken({ req, secret: env.NEXTAUTH_SECRET })
+    const host = req.headers.get("host")
+    const url = req.nextUrl.clone()
 
+    const subdomain = getValidSubdomain(host)
+    if (subdomain) {
+        url.pathname = `/${subdomain}${url.pathname}`
+
+        return NextResponse.rewrite(url)
+    }
+
+    const token = await getToken({ req, secret: env.NEXTAUTH_SECRET })
     const isLoggedIn = token !== null
-    const route = req.nextUrl.pathname
+    const route = url.pathname
 
     const isApiAuthRoute = route.startsWith("/api")
     const isPublicRoute = PUBLIC_ROUTES.some((_route) =>
