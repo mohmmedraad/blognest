@@ -1,4 +1,5 @@
 import { env } from "@/env"
+import { type TElement } from "@udecode/plate-common"
 import { clsx, type ClassValue } from "clsx"
 import { toast } from "sonner"
 import { twMerge } from "tailwind-merge"
@@ -132,4 +133,9 @@ export const getValidSubdomain = (host?: string | null) => {
         }
     }
     return subdomain
+}
+
+export function extractArticleImage(content: TElement[]) {
+    const image = content.find((item) => item.type === "img")
+    return (image?.url as string) || null
 }

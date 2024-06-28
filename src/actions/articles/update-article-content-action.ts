@@ -2,8 +2,10 @@
 
 import { privateProcedure } from "@/actions/procedures/private"
 import { db } from "@/server/db"
+import { type TElement } from "@udecode/plate-common"
 import { ZSAError } from "zsa"
 
+import { extractArticleImage } from "@/lib/utils"
 import { updateArticleContentSchema } from "@/lib/validations/articles"
 
 export const updateArticleContentAction = privateProcedure
@@ -21,9 +23,14 @@ export const updateArticleContentAction = privateProcedure
             throw new ZSAError("NOT_FOUND")
         }
 
+        const thumbnail = extractArticleImage(
+            input.content as unknown as TElement[]
+        )
+
         await db.article.update({
             data: {
                 content: input.content,
+                thumbnail,
             },
             where: {
                 id: input.id,
