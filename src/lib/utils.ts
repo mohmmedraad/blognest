@@ -1,3 +1,4 @@
+import { env } from "@/env"
 import { clsx, type ClassValue } from "clsx"
 import { toast } from "sonner"
 import { twMerge } from "tailwind-merge"
@@ -117,13 +118,15 @@ export function dataURLtoFile(dataUrl: string, filename: string) {
 
 export const getValidSubdomain = (host?: string | null) => {
     let subdomain: string | null = null
+    const url = new URL(env.VERCEL_URL)
     if (!host && typeof window !== "undefined") {
         // On client side, get the host from window
         host = window.location.host
     }
     if (host?.includes(".")) {
         const candidate = host.split(".")[0]
-        if (candidate && !candidate.includes("localhost")) {
+        const isValidCandidate = candidate && !candidate.includes(url.hostname)
+        if (isValidCandidate) {
             // Valid candidate
             subdomain = candidate
         }
