@@ -73,6 +73,8 @@ model Site {
     subdomain   String  @unique
     title       String
     description String
+    heading     String
+    subheading  String
     logo        String?
 
     userId   String
