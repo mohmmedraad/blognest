@@ -96,6 +96,7 @@ model Article {
     title   String
     slug    String   @unique
     content Json
+    image   String?
     topics  String[]
     status  Status   @default(unpublished)
 
