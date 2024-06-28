@@ -118,21 +118,19 @@ export function dataURLtoFile(dataUrl: string, filename: string) {
 }
 
 export const getValidSubdomain = (host?: string | null) => {
-    let subdomain: string | null = null
+    if (!host) {
+        return null
+    }
     const url = new URL(env.VERCEL_URL)
-    if (!host && typeof window !== "undefined") {
-        // On client side, get the host from window
-        host = window.location.host
+
+    const [subdomain] = host?.split(".")
+    const isValidSubdomain = subdomain && !subdomain.includes(url.hostname)
+
+    if (isValidSubdomain) {
+        return subdomain
     }
-    if (host?.includes(".")) {
-        const candidate = host.split(".")[0]
-        const isValidCandidate = candidate && !candidate.includes(url.hostname)
-        if (isValidCandidate) {
-            // Valid candidate
-            subdomain = candidate
-        }
-    }
-    return subdomain
+
+    return null
 }
 
 export function extractArticleImage(content: TElement[]) {
