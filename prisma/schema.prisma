@@ -93,12 +93,12 @@ enum Status {
 model Article {
     id String @id @default(cuid())
 
-    title   String
-    slug    String   @unique
-    content Json
-    image   String?
-    topics  String[]
-    status  Status   @default(unpublished)
+    title     String
+    slug      String   @unique
+    content   Json
+    thumbnail String?
+    topics    String[]
+    status    Status   @default(unpublished)
 
     userId   String
     user     User     @relation(fields: [userId], references: [id], onDelete: Cascade)
