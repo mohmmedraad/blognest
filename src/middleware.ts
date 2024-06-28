@@ -1,22 +1,27 @@
-import { NextResponse, type NextRequest } from "next/server"
+import {
+    // NextResponse,
+    type NextRequest,
+} from "next/server"
 import { getToken } from "next-auth/jwt"
 
 import { env } from "./env"
-import { getValidSubdomain } from "./lib/utils"
+
+// import { getValidSubdomain } from "./lib/utils"
 
 const PUBLIC_ROUTES = ["/", "/blogs", "/login", "/sign-up", "/verify"]
 const AUTH_ROUTES = ["/dashboard"]
 
 export async function middleware(req: NextRequest) {
-    const host = req.headers.get("host")
+    // const host = req.headers.get("host")
     const url = req.nextUrl.clone()
 
-    const subdomain = getValidSubdomain(host)
-    if (subdomain) {
-        url.pathname = `/${subdomain}${url.pathname}`
+    // * If buy a domain and want to use subdomain
+    // const subdomain = getValidSubdomain(host)
+    // if (subdomain) {
+    //     url.pathname = `/${subdomain}${url.pathname}`
 
-        return NextResponse.rewrite(url)
-    }
+    //     return NextResponse.rewrite(url)
+    // }
 
     let token
     try {
@@ -45,9 +50,10 @@ export async function middleware(req: NextRequest) {
         return Response.redirect(new URL("/dashboard", req.nextUrl))
     }
 
-    if (!isPublicRoute && !isLoggedIn) {
-        return Response.redirect(new URL("/login", req.nextUrl))
-    }
+    // * Uncomment this if you want to redirect to login page if the route is unknown
+    // if (!isPublicRoute && !isLoggedIn) {
+    //     return Response.redirect(new URL("/login", req.nextUrl))
+    // }
 
     return null
 }
