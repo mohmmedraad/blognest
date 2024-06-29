@@ -58,3 +58,22 @@ export const editAuthorActionSchema = createAuthorActionSchema
 export const deleteAuthorSchema = z.object({
     id: z.string(),
 })
+
+export const getUserSiteArticlesSchema = paginationSchema.extend({
+    subdomain: z.string(),
+    search: z.string().optional().default(""),
+    sortBy: z
+        .string()
+        .transform((value) => value.split("."))
+        .pipe(
+            z.tuple([z.enum(["createdAt", "title"]), z.enum(["asc", "desc"])])
+        )
+        .optional()
+        .default("createdAt.desc")
+        .catch(["createdAt", "desc"]),
+})
+
+export const userSitePageSearchParams = getUserSiteArticlesSchema.pick({
+    search: true,
+    sortBy: true,
+})

@@ -1,4 +1,5 @@
 import { type SVGProps } from "react"
+import { type Article } from "@prisma/client"
 import { type BuiltInProviderType } from "next-auth/providers/index"
 import { type ClientUploadedFileData } from "uploadthing/types"
 import { type z } from "zod"
@@ -46,3 +47,8 @@ export type EditAuthorActionSchema = z.infer<typeof editAuthorActionSchema>
 export type DeleteAuthorSchema = z.infer<typeof deleteAuthorSchema>
 
 export type EditArticleSchema = z.infer<typeof updateArticleSchema>
+
+export type InitialUserSiteArticles = Pick<
+    Article,
+    "slug" | "title" | "thumbnail" | "topics"
+>[]
