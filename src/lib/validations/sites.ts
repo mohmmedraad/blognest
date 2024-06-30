@@ -17,11 +17,47 @@ export const createSiteSchema = z.object({
 })
 
 export const siteDetailsFormSchema = createSiteSchema.extend({
+    heading: z
+        .string({
+            message: "You must provide a heading",
+        })
+        .min(23, {
+            message: "Heading must be at least 23 characters",
+        })
+        .max(50, { message: "Heading must below 50 characters" })
+        .optional(),
+    subheading: z
+        .string({
+            message: "You must provide a subheading",
+        })
+        .min(25, {
+            message: "Subheading must be at least 25 characters",
+        })
+        .max(150, { message: "Subheading must below 150 characters" })
+        .optional(),
     logo: z.array(z.instanceof(File)),
 })
 
 export const siteDetailsActionSchema = createSiteSchema.partial().extend({
     id: z.string(),
+    heading: z
+        .string({
+            message: "You must provide a heading",
+        })
+        .min(23, {
+            message: "Heading must be at least 23 characters",
+        })
+        .max(50, { message: "Heading must below 50 characters" })
+        .optional(),
+    subheading: z
+        .string({
+            message: "You must provide a subheading",
+        })
+        .min(25, {
+            message: "Subheading must be at least 25 characters",
+        })
+        .max(150, { message: "Subheading must below 150 characters" })
+        .optional(),
     logo: z.string({ message: "You must provide a logo" }).optional(),
 })
 

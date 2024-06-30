@@ -38,6 +38,8 @@ export type SiteEditDetailsFormDefaultValues = {
     subdomain: string
     title: string
     description: string
+    heading: string | null
+    subheading: string | null
     logo: string | null
 }
 

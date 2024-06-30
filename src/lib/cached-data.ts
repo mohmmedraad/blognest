@@ -24,6 +24,8 @@ export const getUserCachedSite = cache(
                     description: true,
                     logo: true,
                     subdomain: true,
+                    heading: true,
+                    subheading: true,
                 },
                 where: {
                     subdomain,

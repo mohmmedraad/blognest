@@ -34,6 +34,8 @@ const SiteEditDetailsForm: FC<SiteEditDetailsFormDefaultValues> = (
         title: defaultValues.title,
         description: defaultValues.description,
         subdomain: defaultValues.subdomain,
+        subheading: defaultValues.subheading,
+        heading: defaultValues.heading,
         logo: defaultValues.logo,
     })
     return (
@@ -46,6 +48,8 @@ const SiteEditDetailsForm: FC<SiteEditDetailsFormDefaultValues> = (
                         description: values.description,
                         subdomain: values.subdomain,
                         logo: uploadedFiles[0]?.url ?? defaultValues.logo!,
+                        heading: values.heading,
+                        subheading: values.subheading,
                     })
                 )}
             >
@@ -83,6 +87,52 @@ const SiteEditDetailsForm: FC<SiteEditDetailsFormDefaultValues> = (
                                 <FormControl>
                                     <Textarea
                                         placeholder="This is a site"
+                                        rows={4}
+                                        disabled={isPending}
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage className="mt-2" />
+                            </div>
+                        </FormItem>
+                    )}
+                />
+                <Separator className="my-5" />
+                <FormField
+                    control={form.control}
+                    name="heading"
+                    render={({ field }) => (
+                        <FormItem className="flex max-w-screen-lg flex-wrap justify-between gap-x-8 gap-y-1.5">
+                            <FormLabel className="w-full max-w-[280px]">
+                                Site Heading
+                            </FormLabel>
+                            <div className="w-full lg:max-w-[512px]">
+                                <FormControl>
+                                    <Textarea
+                                        placeholder="This is a heading"
+                                        rows={4}
+                                        disabled={isPending}
+                                        {...field}
+                                    />
+                                </FormControl>
+                                <FormMessage className="mt-2" />
+                            </div>
+                        </FormItem>
+                    )}
+                />
+                <Separator className="my-5" />
+                <FormField
+                    control={form.control}
+                    name="subheading"
+                    render={({ field }) => (
+                        <FormItem className="flex max-w-screen-lg flex-wrap justify-between gap-x-8 gap-y-1.5">
+                            <FormLabel className="w-full max-w-[280px]">
+                                Subheading
+                            </FormLabel>
+                            <div className="w-full lg:max-w-[512px]">
+                                <FormControl>
+                                    <Textarea
+                                        placeholder="This is a subheading"
                                         rows={4}
                                         disabled={isPending}
                                         {...field}

@@ -24,6 +24,8 @@ export const useSiteDetails = (
             title: defaultValues.title,
             description: defaultValues.description,
             subdomain: defaultValues.subdomain,
+            heading: defaultValues.heading ?? "",
+            subheading: defaultValues.subheading ?? "",
             logo: [],
         },
     })
@@ -78,6 +80,8 @@ export const useSiteDetails = (
                 description: defaultValues.description,
                 logo: defaultValues.logo!,
                 subdomain: defaultValues.subdomain,
+                heading: defaultValues.heading!,
+                subheading: defaultValues.subheading!,
             },
             data
         )
