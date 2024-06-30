@@ -21,7 +21,7 @@ const ArticleCard = forwardRef<HTMLDivElement, ArticleCardProps>(
                         className="size-full rounded-3xl object-cover shadow-md"
                     />
                 </div>
-                <h3 className="mt-2 text-sm font-medium text-gray-950">
+                <h3 className="mt-2 line-clamp-1 text-sm font-medium text-gray-950">
                     {article.title}
                 </h3>
                 <div className="mt-1 flex gap-3">
@@ -37,7 +37,17 @@ const ArticleCard = forwardRef<HTMLDivElement, ArticleCardProps>(
 )
 
 export const ArticleCardSkelton: FC = () => {
-    return <Skeleton className="size-full rounded-3xl" />
+    return (
+        <div className="relative rounded-3xl bg-[#f7f7f1] p-8">
+            <Skeleton className="relative my-14 aspect-video w-full rounded-3xl" />
+            <Skeleton className="relative mt-2 h-3.5 rounded-3xl" />
+            <div className="mt-2 flex gap-3">
+                {new Array(3).fill(0).map((_, index) => (
+                    <Skeleton key={index} className="h-3 w-5 text-[#617187]" />
+                ))}
+            </div>
+        </div>
+    )
 }
 
 ArticleCard.displayName = "ArticleCard"

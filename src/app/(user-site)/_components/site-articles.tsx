@@ -33,7 +33,7 @@ const SiteArticles: FC<SiteArticlesProps> = ({
     }
 
     return (
-        <>
+        <div className="mt-24 grid gap-2 md:grid-cols-2 lg:grid-cols-3">
             {isFetching && !isInitialLoading && !isFetchingNextPage ? (
                 new Array(10)
                     .fill(0)
@@ -70,7 +70,7 @@ const SiteArticles: FC<SiteArticlesProps> = ({
                         : null}
                 </>
             )}
-        </>
+        </div>
     )
 }
 

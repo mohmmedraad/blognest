@@ -25,14 +25,11 @@ export const getUserSiteArticles = createServerAction()
                 },
             },
             take: input.limit,
-            skip: (input.page - 1) * input.limit,
+            skip: input.page * input.limit,
             orderBy: {
                 [sortBy]: sortType,
             },
         })
 
-        console.log({
-            page: input.page,
-        })
-        return articles
+        return articles ?? []
     })

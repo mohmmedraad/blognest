@@ -1,7 +1,6 @@
 import { useEffect, useRef, useState } from "react"
 import { getUserSiteArticles } from "@/actions/sites/get-user-site-articles"
 import type { InitialUserSiteArticles } from "@/types"
-import { useInfiniteQuery } from "@tanstack/react-query"
 import { useIntersectionObserver } from "@uidotdev/usehooks"
 import { parseAsString, useQueryState } from "nuqs"
 
@@ -19,7 +18,7 @@ export const useUserSiteArticles = (
     const [ref, entry] = useIntersectionObserver({
         root: lastArticleRef.current,
         threshold: 1,
-        rootMargin: "100px",
+        rootMargin: "500px",
     })
 
     const {
@@ -28,20 +27,22 @@ export const useUserSiteArticles = (
         isFetchingNextPage,
         isFetchedAfterMount,
         fetchNextPage,
-    } = useInfiniteQuery({
-        // @ts-expect-error error
-        queryFn: getUserSiteArticles,
+    } = useServerActionInfiniteQuery(getUserSiteArticles, {
+        queryKey: ["user-site-articles", subdomain, searchParam, sortBy],
         skip: true,
-        input: () => ({
+        input: ({ pageParam }) => ({
             subdomain,
-            limit: 1,
-            sortBy: ["createdAt", "desc"],
-            search: "",
+            page: pageParam,
+            limit: 10,
+            sortBy,
+            search: searchParam,
         }),
-        initialPageParam: 1,
+        refetchOnWindowFocus: false,
+        initialPageParam: 0,
         getNextPageParam: (lastPage, pages) =>
             lastPage?.length !== 0 ? pages.length : undefined,
-        initialData: { pages: [initialArticles], pageParams: [1] },
+        // @ts-expect-error error
+        initialData: { pages: [initialArticles], pageParams: [0] },
     })
 
     useEffect(() => {
@@ -55,8 +56,7 @@ export const useUserSiteArticles = (
         if (!isFetchedAfterMount) return
         setIsInitialLoading(false)
     }, [isFetchedAfterMount])
-
-    const articles = data?.pages?.flatMap((page) => page)
+    const articles = data?.pages?.flatMap((page) => page) ?? []
     return {
         ref,
         articles,

@@ -38,7 +38,7 @@ const Template: FC<TemplateProps> = async ({ subdomain, searchParams }) => {
                 contains: search,
             },
         },
-        take: 1,
+        take: 10,
         skip: 0,
         orderBy: {
             [sortBy]: sortType,
@@ -55,16 +55,14 @@ const Template: FC<TemplateProps> = async ({ subdomain, searchParams }) => {
                     alt="logo"
                     className="mx-auto"
                 />
-                <h1 className="mx-auto mt-8 text-balance text-center text-6xl font-medium tracking-tighter text-gray-950">
+                <h1 className="mx-auto mt-8 max-w-screen-sm text-balance text-center text-6xl font-medium tracking-tighter text-gray-950">
                     {site.heading}
                 </h1>
             </div>
-            <div className="mt-24 grid gap-2 md:grid-cols-2 lg:grid-cols-3">
-                <SiteArticles
-                    subdomain={site.subdomain}
-                    initialArticles={articles}
-                />
-            </div>
+            <SiteArticles
+                subdomain={site.subdomain}
+                initialArticles={articles}
+            />
         </MaxWidthWrapper>
     )
 }
