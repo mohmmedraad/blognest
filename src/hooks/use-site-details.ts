@@ -38,11 +38,9 @@ export const useSiteDetails = (
         {
             onSuccess: (_, variables) => {
                 toast.success("Your site is updated")
-                if (variables.subdomain) {
-                    return router.push(
-                        `/dashboard/sites/${variables.subdomain}/details`
-                    )
-                }
+                return router.push(
+                    `/dashboard/sites/${variables.subdomain}/details`
+                )
             },
             onError: (error) => {
                 const errorCode = error.code
