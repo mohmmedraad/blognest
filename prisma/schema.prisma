@@ -76,6 +76,7 @@ model Site {
     heading     String?
     subheading  String?
     logo        String?
+    live        Boolean @default(false)
 
     userId   String
     user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
