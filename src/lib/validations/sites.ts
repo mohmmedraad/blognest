@@ -61,6 +61,15 @@ export const siteDetailsActionSchema = createSiteSchema.partial().extend({
     logo: z.string({ message: "You must provide a logo" }).optional(),
 })
 
+export const siteToggleLiveSchema = z.object({
+    id: z.string(),
+    live: z.boolean(),
+})
+
+export const deleteSiteSchema = z.object({
+    id: z.string(),
+})
+
 export const createAuthorFormSchema = z.object({
     name: z.string({ message: "You must provide a name" }).min(5, {
         message: "Name must be at least 5 characters",
