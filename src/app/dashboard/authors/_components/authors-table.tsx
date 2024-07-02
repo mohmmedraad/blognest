@@ -20,7 +20,7 @@ export const AuthorsTable: FC<AuthorsTableProps> = ({}) => {
     const { data, isFetching, setPage } = useAuthors()
 
     return (
-        <div className="mt-8 rounded-md border bg-white">
+        <div className="mt-8 rounded-md border bg-card">
             <div className="flex flex-wrap justify-between gap-6 px-6 py-5">
                 <div>
                     <TableHeading>Your Authors</TableHeading>

@@ -38,7 +38,7 @@ export const columns: ColumnDef<AuthorColumn>[] = [
                         className="size-10 rounded-full shadow-xl"
                     />
                     <div className="flex flex-col">
-                        <span className="w-full overflow-x-hidden text-ellipsis text-sm font-medium text-gray-900">
+                        <span className="w-full overflow-x-hidden text-ellipsis text-sm font-medium text-foreground">
                             {name}
                         </span>
                         <NextLink

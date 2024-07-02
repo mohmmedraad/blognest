@@ -239,7 +239,7 @@ export default function FileUploader({
                         <div
                             {...getRootProps()}
                             className={cn(
-                                "relative flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 py-6 hover:bg-gray-100",
+                                "relative flex w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-dashed border-gray-300 bg-gray-50 py-6 hover:bg-gray-100 dark:border-gray-950 dark:bg-gray-900 dark:hover:bg-gray-800",
                                 className
                             )}
                             {...dropzoneProps}

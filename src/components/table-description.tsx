@@ -9,7 +9,7 @@ const TableDescription: FC<TableDescriptionProps> = ({
     className,
 }) => {
     return (
-        <p className={cn("mt-1 text-sm text-gray-600", className)}>
+        <p className={cn("mt-1 text-sm text-muted-foreground", className)}>
             {children}
         </p>
     )

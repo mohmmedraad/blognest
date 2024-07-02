@@ -4,7 +4,7 @@ interface DashboardParagraphProps
     extends HTMLAttributes<HTMLParagraphElement> {}
 
 const DashboardParagraph: FC<DashboardParagraphProps> = ({ children }) => {
-    return <h2 className="mt-1 text-base text-gray-600">{children}</h2>
+    return <h2 className="mt-1 text-base text-muted-foreground">{children}</h2>
 }
 
 export default DashboardParagraph

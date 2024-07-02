@@ -6,6 +6,7 @@ import NextLink from "next/link"
 import { site } from "@/config/site"
 
 import Logo from "./logo"
+import { ModeToggle } from "./mode-toggle"
 import Link from "./ui/link"
 
 interface HeaderProps {}
@@ -37,6 +38,7 @@ const Header: FC<HeaderProps> = ({}) => {
                             ))} */}
                         </ul>
                     </nav>
+                    <ModeToggle />
                     <Link href={"/dashboard"} size={"lg"}>
                         Dashboard
                     </Link>

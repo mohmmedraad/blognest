@@ -21,7 +21,7 @@ export const ArticlesTable: FC<ArticlesTableProps> = ({}) => {
     const { data, isFetching, setPage } = useArticles()
 
     return (
-        <div className="mt-8 rounded-md border bg-white">
+        <div className="mt-8 rounded-md border bg-card">
             <div className="flex flex-wrap justify-between gap-6 px-6 py-5">
                 <div>
                     <TableHeading>Your Articles</TableHeading>

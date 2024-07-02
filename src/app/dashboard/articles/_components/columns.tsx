@@ -26,7 +26,7 @@ export const columns: ColumnDef<ArticleColumn>[] = [
                 <div className="w-[220px]">
                     <Link
                         href={`/dashboard/articles/${slug}/edit`}
-                        className="line-clamp-1 w-full overflow-x-hidden text-ellipsis text-sm font-medium text-gray-900"
+                        className="line-clamp-1 w-full overflow-x-hidden text-ellipsis text-sm font-medium text-foreground"
                     >
                         {title}
                     </Link>

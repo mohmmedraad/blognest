@@ -29,8 +29,9 @@ const SidebarLink: FC<SidebarLinkProps> = ({
     return isOpen ? (
         <Link
             className={cn(
-                "relative flex w-full items-center rounded-lg px-3 py-2 text-base font-semibold text-gray-700 transition-colors hover:bg-gray-50",
-                active && "bg-gray-50 text-gray-900"
+                "relative flex w-full items-center rounded-lg px-3 py-2 text-base font-semibold text-gray-700 transition-colors hover:bg-gray-50 dark:hover:bg-gray-900",
+                active &&
+                    "bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-200"
             )}
             href={href}
             // activeClass="bg-gray-50 text-gray-900"
@@ -53,8 +54,9 @@ const SidebarLink: FC<SidebarLinkProps> = ({
             <TooltipTrigger asChild>
                 <Link
                     className={cn(
-                        "relative h-10 w-full items-center rounded-lg px-3 py-2 text-base font-semibold text-gray-700 transition-colors hover:bg-gray-50",
-                        active && "bg-gray-50 text-gray-900"
+                        "relative h-10 w-full items-center rounded-lg px-3 py-2 text-base font-semibold text-gray-700 transition-colors hover:bg-gray-50 dark:text-gray-200 dark:hover:bg-gray-900",
+                        active &&
+                            "bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-200"
                     )}
                     href={href}
                     // activeClass="bg-gray-50 text-gray-900"

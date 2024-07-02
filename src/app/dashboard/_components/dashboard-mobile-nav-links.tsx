@@ -11,6 +11,7 @@ interface DashboardMobileNavLinksProps {}
 
 const DashboardMobileNavLinks: FC<DashboardMobileNavLinksProps> = ({}) => {
     const pathname = usePathname()
+    console.log(pathname === "/dashboard/articles")
     return (
         <div className="grid gap-2">
             {DASHBOARD_PRIMARY_LINKS.map(
@@ -18,11 +19,11 @@ const DashboardMobileNavLinks: FC<DashboardMobileNavLinksProps> = ({}) => {
                     <Link
                         key={name}
                         className={cn(
-                            "relative flex w-full items-center rounded-lg px-3 py-2 text-base font-semibold text-gray-700 transition-colors hover:bg-gray-50",
+                            "relative flex w-full items-center rounded-lg px-3 py-2 text-base font-semibold text-gray-700 transition-colors hover:bg-gray-50 dark:hover:bg-gray-900",
                             matchSegments
                                 ? pathname.startsWith(href)
                                 : pathname === href &&
-                                      "bg-gray-50 text-gray-900"
+                                      "bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-200"
                         )}
                         href={href}
                         prefetch={false}

@@ -36,7 +36,7 @@ const Sidebar: FC<SidebarProps> = ({}) => {
                     >
                         <Logo className="size-8" />
                         {isOpen ? (
-                            <span className="text-3xl font-semibold text-gray-900">
+                            <span className="text-3xl font-semibold text-foreground">
                                 {site.name}
                             </span>
                         ) : null}

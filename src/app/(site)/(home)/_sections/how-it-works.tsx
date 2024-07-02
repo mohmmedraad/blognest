@@ -28,7 +28,7 @@ const HowItWorks: FC<HowItWorksProps> = ({}) => {
                         <div className="text-base text-gray-500">
                             Steps {index + 1}
                         </div>
-                        <h3 className="pt-4 text-2xl font-semibold text-gray-900">
+                        <h3 className="pt-4 text-2xl font-semibold text-foreground">
                             {step.title}
                         </h3>
                     </div>

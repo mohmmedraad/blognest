@@ -58,13 +58,13 @@ const SiteLayout: FC<SiteLayoutProps> = async ({
         <DashboardMain>
             <SiteBreadcrumb />
             <DashboardHeading>{site.title}</DashboardHeading>
-            <nav className="mb-8 mt-6 flex gap-1 rounded-[10px] border border-gray-200 bg-gray-50 p-1">
+            <nav className="mb-8 mt-6 flex gap-1 rounded-[10px] border  bg-card p-1">
                 {SITE_LINKS.map((link) => (
                     <NavLink
                         key={link.label}
                         href={link.href.replace("(subdomain)", site.subdomain)}
-                        className="rounded-md px-3 py-2 text-sm font-semibold text-gray-500 hover:bg-white"
-                        activeClass="bg-white text-gray-700"
+                        className="rounded-md px-3 py-2 text-sm font-semibold text-gray-500 hover:bg-gray-100 dark:hover:bg-gray-900"
+                        activeClass="bg-gray-100 dark:bg-gray-900 text-gray-500"
                     >
                         {link.label}
                     </NavLink>

@@ -6,7 +6,7 @@ interface DashboardSiteParagraphProps
 const DashboardSiteParagraph: FC<DashboardSiteParagraphProps> = ({
     children,
 }) => {
-    return <h2 className="mt-1 text-sm text-gray-600">{children}</h2>
+    return <h2 className="mt-1 text-sm text-muted-foreground">{children}</h2>
 }
 
 export default DashboardSiteParagraph
