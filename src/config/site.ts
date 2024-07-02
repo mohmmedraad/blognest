@@ -57,7 +57,7 @@ export const DASHBOARD_PRIMARY_LINKS = [
         name: "Articles",
         href: "/dashboard/articles",
         Icon: SquareGanttChart,
-        matchSegments: true,
+        matchSegments: false,
     },
     {
         name: "Authors",
