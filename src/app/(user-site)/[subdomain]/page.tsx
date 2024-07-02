@@ -20,8 +20,7 @@ const UserSitePage: FC<UserSitePageProps> = async ({
     if (!subdomain) return null
 
     const site = await getCachedSite(subdomain)
-    if (!site) return notFound()
-    if (!site.logo || !site.heading) return notFound()
+    if (!site?.logo || !site.heading || !site.live) return notFound()
 
     return <Template subdomain={site.subdomain} searchParams={searchParams} />
 }
