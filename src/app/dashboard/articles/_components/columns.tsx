@@ -43,24 +43,30 @@ export const columns: ColumnDef<ArticleColumn>[] = [
                 row.getValue<Pick<ArticleColumn, "author">>("author")
             return (
                 <div className="flex w-[220px] items-center gap-3">
-                    <Image
-                        src={author?.avatar ?? "/placeholder.png"}
-                        width={40}
-                        height={40}
-                        alt="author avatar"
-                        className="size-10 rounded-full shadow-xl"
-                    />
-                    <div className="flex flex-col">
-                        <span className="w-full overflow-x-hidden text-ellipsis text-sm font-medium text-gray-900">
-                            {author?.name}
-                        </span>
-                        <Link
-                            href={`${author?.username}`}
-                            className="text-sm text-gray-600 hover:underline hover:underline-offset-4"
-                        >
-                            @{author?.username}
-                        </Link>
-                    </div>
+                    {author ? (
+                        <>
+                            <Image
+                                src={author?.avatar ?? "/placeholder.png"}
+                                width={40}
+                                height={40}
+                                alt="author avatar"
+                                className="size-10 rounded-full shadow-xl"
+                            />
+                            <div className="flex flex-col">
+                                <span className="w-full overflow-x-hidden text-ellipsis text-sm font-medium text-gray-900">
+                                    {author?.name}
+                                </span>
+                                <Link
+                                    href={`${author?.username}`}
+                                    className="text-sm text-gray-600 hover:underline hover:underline-offset-4"
+                                >
+                                    @{author?.username}
+                                </Link>
+                            </div>
+                        </>
+                    ) : (
+                        <span className="text-sm text-gray-600">No author</span>
+                    )}
                 </div>
             )
         },
@@ -73,20 +79,28 @@ export const columns: ColumnDef<ArticleColumn>[] = [
             const { site } = row.getValue<Pick<ArticleColumn, "site">>("site")
             return (
                 <div className="flex w-[220px] items-center gap-3">
-                    <Image
-                        src={site?.logo ?? "/placeholder.png"}
-                        width={40}
-                        height={40}
-                        alt="site avatar"
-                        className="size-10 rounded-full shadow-xl"
-                    />
+                    {site ? (
+                        <>
+                            <Image
+                                src={site?.logo ?? "/placeholder.png"}
+                                width={40}
+                                height={40}
+                                alt="site avatar"
+                                className="size-10 rounded-full shadow-xl"
+                            />
 
-                    <Link
-                        href={`${site?.subdomain}`}
-                        className="w-full overflow-x-hidden text-ellipsis text-sm font-medium text-gray-900 hover:underline hover:underline-offset-4"
-                    >
-                        {site?.subdomain}
-                    </Link>
+                            <Link
+                                href={`${site?.subdomain}`}
+                                className="w-full overflow-x-hidden text-ellipsis text-sm font-medium text-gray-900 hover:underline hover:underline-offset-4"
+                            >
+                                {site?.subdomain}
+                            </Link>
+                        </>
+                    ) : (
+                        <span className="text-sm text-gray-600">
+                            NO article
+                        </span>
+                    )}
                 </div>
             )
         },
