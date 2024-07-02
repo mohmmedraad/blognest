@@ -54,6 +54,7 @@ export const getCachedSite = cache(async (subdomain: string) => {
                 subdomain: true,
                 heading: true,
                 subheading: true,
+                live: true,
             },
             where: {
                 subdomain,
