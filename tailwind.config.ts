@@ -23,6 +23,8 @@ const config = {
                     "linear-gradient(31deg, rgb(0, 0, 0) 0%, hsl(var(--primary)) 100%)",
                 "hero-radial-gradient":
                     "radial-gradient(102.4% 100% at 75.5% -5.1%, rgb(124, 58, 237) .9009009009009009%, rgb(124,153,255) 34.08291103603604%, rgb(124,194,255) 54.82650619369369%, rgb(255,255,255) 100%)",
+                "dark-hero-radial-gradient":
+                    "radial-gradient(102.4% 100% at 75.5% -5.1%, rgb(124, 58, 237) .9009009009009009%, rgb(124,153,255) 34.08291103603604%, rgb(124,194,255) 54.82650619369369%, rgb(0,0,0) 100%)",
                 "hero-patterns-gradient": `
           radial-gradient(circle at center center, rgb(0, 0, 0), rgba(33, 222, 222, 0)),
           repeating-radial-gradient(circle at center center, rgb(0, 0, 0), rgb(0, 0, 0) 70px, transparent 140px, transparent 70px)

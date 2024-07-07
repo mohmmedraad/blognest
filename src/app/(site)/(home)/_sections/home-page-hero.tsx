@@ -12,7 +12,7 @@ interface HomePageHeroProps {}
 const HomePageHero: FC<HomePageHeroProps> = ({}) => {
     return (
         <section className="overflow-x-hidden pb-40">
-            <div className="absolute left-0 top-0 z-0 h-[842px] w-full overflow-hidden bg-hero-radial-gradient opacity-20">
+            <div className="dark:bg-dark-hero-radial-gradient absolute left-0 top-0 z-0 h-[842px] w-full overflow-hidden bg-hero-radial-gradient opacity-20">
                 <div
                     style={{
                         inset: "-230px -138px -559px -137px",
