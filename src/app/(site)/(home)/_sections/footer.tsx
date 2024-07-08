@@ -10,15 +10,15 @@ interface FooterProps {}
 const SOCIAL_LINKS = [
     {
         Icon: Icons.x,
-        href: "#x",
+        href: "https://x.com/",
     },
     {
         Icon: Icons.instagram,
-        href: "#instagram",
+        href: "https://www.instagram.com/",
     },
     {
         Icon: Icons.linkedin,
-        href: "#linkedin",
+        href: "https://www.linkedin.com/",
     },
 ]
 
