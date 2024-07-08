@@ -36,7 +36,7 @@ const Footer: FC<FooterProps> = ({}) => {
                         </NextLink>
                     ))}
                 </div>
-                <div className="text-center text-sm text-gray-600">
+                <div className="text-center text-sm text-gray-300">
                     © 2024 Blognest, Inc. All rights reserved.
                 </div>
             </MaxWidthWrapper>
