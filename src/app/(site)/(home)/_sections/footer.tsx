@@ -9,14 +9,17 @@ interface FooterProps {}
 
 const SOCIAL_LINKS = [
     {
+        name: "X",
         Icon: Icons.x,
         href: "https://x.com/",
     },
     {
+        name: "Instagram",
         Icon: Icons.instagram,
         href: "https://www.instagram.com/",
     },
     {
+        name: "Linkedin",
         Icon: Icons.linkedin,
         href: "https://www.linkedin.com/",
     },
@@ -30,9 +33,10 @@ const Footer: FC<FooterProps> = ({}) => {
                     <Logo className="mx-auto w-[70px]" width={70} height={70} />
                 </NextLink>
                 <div className="flex justify-center gap-4 py-6">
-                    {SOCIAL_LINKS.map(({ Icon, href }) => (
+                    {SOCIAL_LINKS.map(({ name, Icon, href }) => (
                         <NextLink key={href} href={href}>
                             <Icon className="size-6 text-gray-500 hover:text-gray-300" />
+                            <span className="sr-only">{name}</span>
                         </NextLink>
                     ))}
                 </div>
