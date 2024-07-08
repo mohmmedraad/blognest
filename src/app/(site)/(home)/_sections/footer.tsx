@@ -31,7 +31,7 @@ const Footer: FC<FooterProps> = ({}) => {
                 </NextLink>
                 <div className="flex justify-center gap-4 py-6">
                     {SOCIAL_LINKS.map(({ Icon, href }) => (
-                        <NextLink key={href} href={"/"}>
+                        <NextLink key={href} href={href}>
                             <Icon className="size-6 text-gray-500 hover:text-gray-300" />
                         </NextLink>
                     ))}
